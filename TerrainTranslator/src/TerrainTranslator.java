@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 /**
  * Created by Szymon on 2015-10-15.
@@ -49,7 +50,7 @@ public class TerrainTranslator extends Component{
     	    	int[] rgb = readPixelRGB(terrain, j, i);    	    	
     	    	float[] hsv = new float[3];
     	    	Color.RGBtoHSB(rgb[0],rgb[1],rgb[2],hsv);
-    	    	if(hsv[0]<=120)
+    	    	if(hsv[0]<=0.75)
     	    		terrainData[j][i] = (double)Math.round(10000 * hsv[0]) / 100;
     		}
     	}
@@ -66,6 +67,22 @@ public class TerrainTranslator extends Component{
     		System.out.println();
     	}
     }
+
+	public void saveTerrainData(String fileName)
+	{
+		try(PrintWriter writer = new PrintWriter(fileName+".txt", "UTF-8")) {
+			for (int i = 0; i < terrain.getHeight(); i++) {
+				for (int j = 0; j < terrain.getWidth(); j++) {
+					writer.print(terrainData[j][i]+ ",");
+				}
+				writer.println();
+			}
+		}
+		catch(IOException ex)
+		{
+			System.out.println("Blad zapisu do pliku!");
+		}
+	}
     
     public void saveImage()
     {
