@@ -3,11 +3,11 @@ package com.company.Helper;
 /**
  * Created by Szymon on 2015-10-16.
  */
-public class Vector2 {
+public class Position {
     private double x;
     private double y;
 
-    public Vector2(double _x, double _y)
+    public Position(double _x, double _y)
     {
         x = _x;
         y = _y;
@@ -33,8 +33,10 @@ public class Vector2 {
         return y;
     }
 
-    public double countDistance(Vector2 vect)
+    public double countDistance(Position vect, boolean ifToward)
     {
-        return 2.0;
+        if(ifToward)
+            return 2.0;
+        return -2.0;
     }
 }
