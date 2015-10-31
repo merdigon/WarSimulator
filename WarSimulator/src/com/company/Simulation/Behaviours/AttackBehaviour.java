@@ -19,5 +19,6 @@ public class AttackBehaviour extends OneShotBehaviour {
     @Override
     public void action() {
         //co jezeli zolnierz zostanie trafiony
+        defender.changeHp(40);
     }
 }

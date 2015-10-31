@@ -1,23 +1,27 @@
 package com.company.Simulation;
 
-import com.company.Helper.CoordHelper.Vector2;
+import com.company.Helper.CoordHelper.Coord;
 
 /**
  * Created by Szymon on 2015-10-27.
  */
 public class Command {
 
-    Vector2 possition;
+    Coord possition;
     CommandType command;
 
     public Command(){
 
     }
 
-    public void setVector2(double x, double y)
+    public void setCoordToMove(double x, double y)
     {
-        possition = new Vector2(x,y);
+        possition = new Coord(x,y);
     }
 
+    public Coord getPossition() { return possition; }
 
+    public void setPossition(Coord possition) { this.possition = possition; }
+
+    public CommandType getCommType() {return command;}
 }

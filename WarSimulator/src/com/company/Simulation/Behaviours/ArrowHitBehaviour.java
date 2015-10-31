@@ -22,5 +22,6 @@ public class ArrowHitBehaviour extends OneShotBehaviour {
         //!!!!! dodawaæ tylko te rzeczy, które nie zale¿¹ od jego decyzji
         //za decyzjê odpowiada behaviour SoldierBehaviour
         //tutaj dodaæ tylko utratê ¿ycia, ewentualnie œmieræ
+        hitSoldier.changeHp(40);
     }
 }

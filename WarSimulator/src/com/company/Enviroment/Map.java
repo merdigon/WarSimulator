@@ -1,6 +1,7 @@
 package com.company.Enviroment;
 
 
+import com.company.Helper.CoordHelper.Coord;
 import com.company.Simulation.Agents.Soldiers.Soldier;
 
 /**
@@ -11,17 +12,6 @@ public class Map {
     //public static int HeightY = 200;
     public PointOfTerrain[][] Terrain;
     TerrainTranslator terrTrans;
-
-    public synchronized boolean moveSoldier(int x1, int y1, int x2, int y2)
-    {
-        if(Terrain[x2][y2].getSoldier()!=null)
-            return false;
-
-        Soldier tmpSold;
-        tmpSold = Terrain[x1][y1].getSoldier();
-        Terrain[x2][y2].setSoldier(tmpSold);
-        return true;
-    }
 
     public Map(){
         terrTrans = new TerrainTranslator();
@@ -35,6 +25,33 @@ public class Map {
                 Terrain[i][j] = new PointOfTerrain(terrainHeight[i][j], KindOfTerrain.NORMAL);
             }
         }
+    }
+
+    public synchronized boolean moveSoldier(int x1, int y1, int x2, int y2)
+    {
+        if(Terrain[x2][y2].getSoldier()!=null)
+            return false;
+
+        changeSoldierPoss(x1, y1, x2, y2);
+
+        return true;
+    }
+
+    private synchronized void changeSoldierPoss(int x1, int y1, int x2, int y2)
+    {
+        Soldier tmpSold;
+        tmpSold = Terrain[x1][y1].getSoldier();
+        Terrain[x2][y2].setSoldier(tmpSold);
+        Terrain[x1][y1].setSoldier(null);
+        tmpSold.setCoord(new Coord(x2, y2));
+    }
+
+    public Soldier getSoldierOnPosition(int x, int y){
+        return Terrain[x][y].getSoldier();
+    }
+
+    public void clearPosition(int x, int y){
+        Terrain[x][y].setSoldier(null);
     }
 }
 
