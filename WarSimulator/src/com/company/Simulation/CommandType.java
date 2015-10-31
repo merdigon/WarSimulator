@@ -1,4 +1,4 @@
-package com.company.Agents;
+package com.company.Simulation;
 
 /**
  * Created by Szymon on 2015-10-27.

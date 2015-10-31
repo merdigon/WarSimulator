@@ -1,6 +1,6 @@
 package com.company;
 
-import com.company.Agents.General;
+import com.company.Simulation.Agents.General;
 import com.company.Enviroment.Terrain;
 
 /**

@@ -1,4 +1,4 @@
-package com.company.Agents;
+package com.company.Simulation;
 
 import com.company.Helper.CoordHelper.Vector2;
 

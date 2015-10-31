@@ -1,4 +1,6 @@
-package com.company.Agents;
+package com.company.Simulation.Agents;
+
+import com.company.Simulation.Command;
 
 import java.util.List;
 
