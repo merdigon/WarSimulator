@@ -1,18 +1,20 @@
-package com.company.Simulation.Agents;
+package com.company.Simulation.Agents.Squads;
 
+import com.company.Simulation.Agents.Soldiers.Soldier;
 import com.company.Simulation.Command;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Szymon on 2015-10-27.
  */
-public class Squad extends Agent {
-    Command comm;
-    List<Soldier> squadSoldiers;
+public class Squad {
+    protected Command comm;
+    protected ArrayList<Soldier> squadSoldiers;
 
     public Squad(){
-        squadSoldiers = new List<Soldier>();
+        squadSoldiers = new ArrayList<Soldier>();
     }
 
     public void giveCommand()

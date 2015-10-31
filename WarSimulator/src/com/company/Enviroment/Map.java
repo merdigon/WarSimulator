@@ -1,14 +1,27 @@
 package com.company.Enviroment;
 
 
+import com.company.Simulation.Agents.Soldiers.Soldier;
+
 /**
  * Created by Szymon on 2015-10-16.
  */
 public class Map {
     //public static int WidthX = 200;
     //public static int HeightY = 200;
-    PointOfTerrain[][] Terrain;
+    public PointOfTerrain[][] Terrain;
     TerrainTranslator terrTrans;
+
+    public synchronized boolean moveSoldier(int x1, int y1, int x2, int y2)
+    {
+        if(Terrain[x2][y2].getSoldier()!=null)
+            return false;
+
+        Soldier tmpSold;
+        tmpSold = Terrain[x1][y1].getSoldier();
+        Terrain[x2][y2].setSoldier(tmpSold);
+        return true;
+    }
 
     public Map(){
         terrTrans = new TerrainTranslator();
@@ -22,32 +35,6 @@ public class Map {
                 Terrain[i][j] = new PointOfTerrain(terrainHeight[i][j], KindOfTerrain.NORMAL);
             }
         }
-    }
-}
-
-class PointOfTerrain{
-    double height;
-    KindOfTerrain kindOfTerrain;
-    public PointOfTerrain(double height, KindOfTerrain kOfTerr)
-    {
-        this.height = height;
-        kindOfTerrain = kOfTerr;
-    }
-
-    public void setHeight(double height){
-        this.height = height;
-    }
-
-    public void setTerrainKind(KindOfTerrain kndOfTerr){
-        this.kindOfTerrain = kndOfTerr;
-    }
-
-    public double getHeight(){
-        return this.height;
-    }
-
-    public KindOfTerrain getTerrainKind(){
-        return this.kindOfTerrain;
     }
 }
 
