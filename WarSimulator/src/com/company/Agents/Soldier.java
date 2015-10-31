@@ -6,6 +6,7 @@ package com.company.Agents;
 public class Soldier extends Agent {
     Command comm;
 
+
     public void setCommand(Command comm)
     {
         this.comm = comm;

@@ -1,6 +1,6 @@
 package com.company.Agents;
 
-import com.company.Helper.Vector2;
+import com.company.Helper.CoordHelper.Vector2;
 
 /**
  * Created by Szymon on 2015-10-27.
