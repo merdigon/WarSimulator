@@ -31,16 +31,36 @@ public class WarriorSquad extends Squad {
                     break;
                 }
             }
+            if(comm==null){
+                for(Soldier sold : battle.squads[2].getSoldiers()){
+                    if(sold.getStatus())
+                    {
+                        comm = new Command(CommandType.MOVEMENT);
+                        comm.setPossition(new Coord(sold.getCoord().getX(), sold.getCoord().getY()));
+                        break;
+                    }
+                }
+            }
 
         }
         if(team == Teams.RED){
             comm = null;
             for(Soldier sold : battle.squads[1].getSoldiers()){
-                if(sold.getStatus())
-                {
+                if(sold.getStatus()) {
                     comm = new Command(CommandType.MOVEMENT);
                     comm.setPossition(new Coord(sold.getCoord().getX(), sold.getCoord().getY()));
                     break;
+                }
+            }
+            if(comm==null)
+            {
+                for(Soldier sold : battle.squads[0].getSoldiers()){
+                    if(sold.getStatus())
+                    {
+                        comm = new Command(CommandType.MOVEMENT);
+                        comm.setPossition(new Coord(sold.getCoord().getX(), sold.getCoord().getY()));
+                        break;
+                    }
                 }
             }
         }
