@@ -98,7 +98,7 @@ public abstract class SoldierBehaviour extends CyclicBehaviour {
     }
 
     protected void lookForAgents(){
-        Coord tmpCoord = getSoldier().getCoord();
+        Coord tmpCoord = getSoldier().getCoord().clone();
         Soldier tmpsold;
         tmpCoord.setX(tmpCoord.getX()-3);
         tmpCoord.setY(tmpCoord.getY()-3);
@@ -106,13 +106,15 @@ public abstract class SoldierBehaviour extends CyclicBehaviour {
         {
             for(int j=0; j<7; j++)
             {
-                if(i!=3 && j!=3)
+                if(i!=3 || j!=3)
                 {
-                    if((tmpsold = getSoldier().getSquad().terrainMap.getSoldierOnPosition((int)tmpCoord.getX()*i,(int)tmpCoord.getY()+j))!=null){
-                        if(tmpsold.getSquad().team == getSoldier().getSquad().team)
-                            noticedFriends.add(tmpsold);
-                        else
-                            noticedEnemies.add(tmpsold);
+                    if((int)tmpCoord.getX()+i < getSoldier().getSquad().terrainMap.X && (int)tmpCoord.getY()+j < getSoldier().getSquad().terrainMap.Y) {
+                        if ((tmpsold = getSoldier().getSquad().terrainMap.getSoldierOnPosition((int) tmpCoord.getX() + i, (int) tmpCoord.getY() + j)) != null) {
+                            if (tmpsold.getSquad().team == getSoldier().getSquad().team)
+                                noticedFriends.add(tmpsold);
+                            else
+                                noticedEnemies.add(tmpsold);
+                        }
                     }
                 }
             }
@@ -134,15 +136,15 @@ public abstract class SoldierBehaviour extends CyclicBehaviour {
         if(getSoldier().getCommand() != null && getSoldier().getCommand().getCommType() == CommandType.MOVEMENT){
             Coord enemyCoord = getSoldier().getCommand().getPossition();
             if(Math.abs(getSoldier().getCoord().getX() - enemyCoord.getX()) <= 2){
-                move(0, (int)(enemyCoord.getY() - getSoldier().getCoord().getY()/Math.abs(enemyCoord.getY() - getSoldier().getCoord().getY())));
+                move(0, (int)((enemyCoord.getY() - getSoldier().getCoord().getY())/Math.abs(enemyCoord.getY() - getSoldier().getCoord().getY())));
                 return true;
             }
             if(Math.abs(getSoldier().getCoord().getY()-enemyCoord.getY()) <= 2){
-                move((int)(enemyCoord.getX() - getSoldier().getCoord().getX()/Math.abs(enemyCoord.getX() - getSoldier().getCoord().getX())), 0);
+                move((int)((enemyCoord.getX() - getSoldier().getCoord().getX())/Math.abs(enemyCoord.getX() - getSoldier().getCoord().getX())), 0);
                 return true;
             }
             move((int)(enemyCoord.getX() - getSoldier().getCoord().getX()/Math.abs(enemyCoord.getX() - getSoldier().getCoord().getX())),
-                    (int)(enemyCoord.getY() - getSoldier().getCoord().getY()/Math.abs(enemyCoord.getY() - getSoldier().getCoord().getY())));
+                    (int)((enemyCoord.getY() - getSoldier().getCoord().getY())/Math.abs(enemyCoord.getY() - getSoldier().getCoord().getY())));
             return true;
         }
         return false;
@@ -162,15 +164,15 @@ public abstract class SoldierBehaviour extends CyclicBehaviour {
         if(!noticedEnemies.isEmpty()){
             Coord enemyCoord = noticedEnemies.get(0).getCoord();
             if(Math.abs(getSoldier().getCoord().getX()-enemyCoord.getX()) <= 2){
-                move(0, (int)(enemyCoord.getY() - getSoldier().getCoord().getY()/Math.abs(enemyCoord.getY() - getSoldier().getCoord().getY())));
+                move(0, (int)((enemyCoord.getY() - getSoldier().getCoord().getY())/Math.abs(enemyCoord.getY() - getSoldier().getCoord().getY())));
                 return true;
             }
             if(Math.abs(getSoldier().getCoord().getY()-enemyCoord.getY()) <= 2){
-                move((int)(enemyCoord.getX() - getSoldier().getCoord().getX()/Math.abs(enemyCoord.getX() - getSoldier().getCoord().getX())), 0);
+                move((int)((enemyCoord.getX() - getSoldier().getCoord().getX())/Math.abs(enemyCoord.getX() - getSoldier().getCoord().getX())), 0);
                 return true;
             }
             move((int)(enemyCoord.getX() - getSoldier().getCoord().getX()/Math.abs(enemyCoord.getX() - getSoldier().getCoord().getX())),
-                    (int)(enemyCoord.getY() - getSoldier().getCoord().getY()/Math.abs(enemyCoord.getY() - getSoldier().getCoord().getY())));
+                    (int)((enemyCoord.getY() - getSoldier().getCoord().getY())/Math.abs(enemyCoord.getY() - getSoldier().getCoord().getY())));
             return true;
         }
         return false;

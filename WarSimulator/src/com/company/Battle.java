@@ -31,8 +31,8 @@ public class Battle {
         squads[3] = new WarriorSquad(Teams.RED, terrainMap);
         squads[0].setSquad(5,5,5,5);
         squads[1].setSquad(20,5,10,5);
-        squads[2].setSquad(5,40,5,5);
-        squads[3].setSquad(20,40,10,5);
+        squads[2].setSquad(5,30,5,5);
+        squads[3].setSquad(20,30,10,5);
     }
 
     public void start(){
@@ -51,6 +51,11 @@ public class Battle {
             }
         }
 
+        gui.changeGrid(squads[0].terrainMap);
 
+        try {
+            wait(5000);
+        }
+        catch(Exception e){}
     }
 }

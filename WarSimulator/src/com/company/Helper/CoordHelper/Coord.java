@@ -5,11 +5,15 @@ import com.company.Enviroment.Map;
 /**
  * Created by Szymon on 2015-10-16.
  */
-public class Coord extends CoordHelper {
+public class Coord extends CoordHelper implements Cloneable {
 
     public Coord(double _x, double _y)
     {
         super(_x, _y);
+    }
+
+    public Coord clone(){
+        return new Coord(x,y);
     }
 
     @Override

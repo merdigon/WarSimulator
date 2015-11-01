@@ -98,7 +98,7 @@ public class GuiCreator extends JPanel {
 		try {
 			image = ImageIO
 					.read(new File(
-							"ABS\\PATH\\final.png")); //TODO: insert your own abs path
+							"C:\\Users\\Szymon\\Documents\\GitHub\\WarSimulator\\WarSimulator\\out\\production\\WarSimulator\\com\\company\\terrain.png")); //TODO: insert your own abs path
 		} catch (IOException ex) {
 			System.out.print("Lipka");
 		}
@@ -130,7 +130,7 @@ public class GuiCreator extends JPanel {
 			}
 		}
 	}
-	
+
 	public static void main(String[] args) {
 		// TO TEST GUI
 		 GuiCreator gui = new GuiCreator();

@@ -10,7 +10,7 @@ import com.company.Simulation.Command;
 
 public abstract class Soldier extends Agent {
 
-    protected int hp;
+    protected int hp=100;
     protected Command comm;
     protected Coord soldCoord;
 
@@ -34,7 +34,9 @@ public abstract class Soldier extends Agent {
 
     public Coord getCoord() { return soldCoord; }
 
-    public void setCoord(Coord soldCoord) { this.soldCoord = soldCoord; }
+    public void setCoord(Coord soldCoord) {
+        this.soldCoord = soldCoord;
+    }
 
     public void setHp(int a) { hp = a; }
 
