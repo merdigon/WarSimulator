@@ -10,8 +10,8 @@ public class Command {
     Coord possition;
     CommandType command;
 
-    public Command(){
-
+    public Command(CommandType cmdtype){
+        command = cmdtype;
     }
 
     public void setCoordToMove(double x, double y)

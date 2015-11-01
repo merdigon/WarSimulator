@@ -39,7 +39,7 @@ public class Map {
         if(Terrain[x2][y2].getSoldier()!=null)
             return false;
 
-        if(Terrain[x1][x2].getSoldier() == null)
+        if(Terrain[x1][y1].getSoldier() == null)
             return false;
 
         changeSoldierPoss(x1, y1, x2, y2);

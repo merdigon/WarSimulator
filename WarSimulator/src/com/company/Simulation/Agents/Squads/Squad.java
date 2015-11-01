@@ -1,5 +1,6 @@
 package com.company.Simulation.Agents.Squads;
 
+import com.company.Battle;
 import com.company.Enviroment.Map;
 import com.company.Simulation.Agents.Soldiers.Soldier;
 import com.company.Simulation.Command;
@@ -14,14 +15,18 @@ import java.util.List;
 public abstract class Squad {
     protected Command comm;
     protected ArrayList<Soldier> squadSoldiers;
+    protected Battle battle;
     public Teams team;
     public Map terrainMap;
 
-    public Squad(Teams team, Map map){
+    public Squad(Teams team, Map map, Battle battle){
         terrainMap = map;
-        squadSoldiers = new ArrayList<Soldier>();
+        squadSoldiers = new ArrayList<>();
         this.team = team;
+        this.battle = battle;
     }
+
+    public abstract void setCommand();
 
     public abstract void setSquad(int startCoordX, int startCoordY, int howManyInX, int howManyInY);/*{
         Soldier sld;
@@ -40,7 +45,8 @@ public abstract class Squad {
         {
             for(int i=0;i<squadSoldiers.size();i++)
             {
-                squadSoldiers.get(i).setCommand(comm);
+                if(squadSoldiers.get(i).getStatus())
+                    squadSoldiers.get(i).setCommand(comm);
             }
         }
     }
@@ -48,7 +54,7 @@ public abstract class Squad {
     public synchronized void eliminateSoldier(Soldier sold){
         for(int i=0;i<squadSoldiers.size();i++){
             if(squadSoldiers.get(i) == sold) {
-                squadSoldiers.remove(i);
+                squadSoldiers.get(i).setStatus(false);
                 return;
             }
         }

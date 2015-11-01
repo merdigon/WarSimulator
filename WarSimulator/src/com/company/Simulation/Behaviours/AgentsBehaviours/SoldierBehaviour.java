@@ -30,6 +30,8 @@ public abstract class SoldierBehaviour extends CyclicBehaviour {
             return;
         }
         thinking();
+        noticedEnemies.clear();
+        noticedFriends.clear();
     }
 
     protected void thinking(){
@@ -44,6 +46,9 @@ public abstract class SoldierBehaviour extends CyclicBehaviour {
     }
 
     protected boolean move(int xRelative, int yRelative){
+        if(xRelative>1 || xRelative<-1 || yRelative<-1 || yRelative>1)
+            xRelative++;
+
         Coord soldCoord = getSoldier().getCoord();
         if(!getSoldier().getSquad().terrainMap.moveSoldier((int)soldCoord.getX(), (int)soldCoord.getY(), (int)soldCoord.getX() + xRelative, (int)soldCoord.getY() + yRelative))
         {
@@ -143,7 +148,7 @@ public abstract class SoldierBehaviour extends CyclicBehaviour {
                 move((int)((enemyCoord.getX() - getSoldier().getCoord().getX())/Math.abs(enemyCoord.getX() - getSoldier().getCoord().getX())), 0);
                 return true;
             }
-            move((int)(enemyCoord.getX() - getSoldier().getCoord().getX()/Math.abs(enemyCoord.getX() - getSoldier().getCoord().getX())),
+            move((int)((enemyCoord.getX() - getSoldier().getCoord().getX())/Math.abs(enemyCoord.getX() - getSoldier().getCoord().getX())),
                     (int)((enemyCoord.getY() - getSoldier().getCoord().getY())/Math.abs(enemyCoord.getY() - getSoldier().getCoord().getY())));
             return true;
         }
@@ -171,7 +176,7 @@ public abstract class SoldierBehaviour extends CyclicBehaviour {
                 move((int)((enemyCoord.getX() - getSoldier().getCoord().getX())/Math.abs(enemyCoord.getX() - getSoldier().getCoord().getX())), 0);
                 return true;
             }
-            move((int)(enemyCoord.getX() - getSoldier().getCoord().getX()/Math.abs(enemyCoord.getX() - getSoldier().getCoord().getX())),
+            move((int)((enemyCoord.getX() - getSoldier().getCoord().getX())/Math.abs(enemyCoord.getX() - getSoldier().getCoord().getX())),
                     (int)((enemyCoord.getY() - getSoldier().getCoord().getY())/Math.abs(enemyCoord.getY() - getSoldier().getCoord().getY())));
             return true;
         }

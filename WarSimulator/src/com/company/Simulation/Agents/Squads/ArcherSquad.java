@@ -1,5 +1,6 @@
 package com.company.Simulation.Agents.Squads;
 
+import com.company.Battle;
 import com.company.Enviroment.Map;
 import com.company.Simulation.Agents.ArrowPhysic;
 import com.company.Simulation.Agents.Soldiers.Archer;
@@ -14,8 +15,13 @@ public class ArcherSquad extends Squad{
 
     public ArrowPhysic arrowPhysic = new ArrowPhysic();
 
-    public ArcherSquad(Teams team, Map map){
-        super(team, map);
+    public ArcherSquad(Teams team, Map map, Battle battle){
+        super(team, map, battle);
+    }
+
+    @Override
+    public void setCommand() {
+
     }
 
     @Override

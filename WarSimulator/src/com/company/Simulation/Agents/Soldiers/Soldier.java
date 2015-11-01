@@ -13,6 +13,7 @@ public abstract class Soldier extends Agent {
     protected int hp=100;
     protected Command comm;
     protected Coord soldCoord;
+    protected boolean isAlive = true;
 
     public Soldier(){
         setup();
@@ -43,4 +44,8 @@ public abstract class Soldier extends Agent {
     public void changeHp (int a) { hp = hp - a; }
 
     public int getHp() { return hp; }
+
+    public boolean getStatus() { return isAlive; }
+
+    public void setStatus(boolean bool) { isAlive = bool; }
 }

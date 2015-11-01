@@ -130,10 +130,10 @@ public class GuiCreator extends JPanel {
 			}
 		}
 	}
-
+/*
 	public static void main(String[] args) {
 		// TO TEST GUI
 		 GuiCreator gui = new GuiCreator();
-	}
+	}*/
 
 }
