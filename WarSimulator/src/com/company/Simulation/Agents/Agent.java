@@ -1,6 +1,6 @@
 package com.company.Simulation.Agents;
 
-import com.company.Simulation.Behaviours.BahavioursBasics.Behaviour;
+import com.company.Simulation.Behaviours.BasicBahaviours.Behaviour;
 
 import java.util.ArrayList;
 

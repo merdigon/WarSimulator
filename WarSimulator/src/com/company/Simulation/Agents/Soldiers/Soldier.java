@@ -7,26 +7,20 @@ import com.company.Helper.CoordHelper.Coord;
 import com.company.Simulation.Agents.Agent;
 import com.company.Simulation.Agents.Squads.Squad;
 import com.company.Simulation.Command;
-import com.company.Simulation.Behaviours.SoldierBehaviour;
 
-import java.util.ArrayList;
-
-public class Soldier extends Agent {
+public abstract class Soldier extends Agent {
 
     protected int hp;
     protected Command comm;
-    protected Squad squad;
     protected Coord soldCoord;
 
-    public Soldier(Squad _squad){
-        this.squad = _squad;
+    public Soldier(){
         setup();
     }
 
-    protected void setup()
-    {
-        addBehaviour(new SoldierBehaviour(this));
-    }
+    public abstract Squad getSquad();
+
+    protected abstract void setup();
 
     public void setCommand(Command comm)
     {
@@ -37,8 +31,6 @@ public class Soldier extends Agent {
     {
          return comm;
     }
-
-    public Squad getSquad() { return squad;  }
 
     public Coord getCoord() { return soldCoord; }
 

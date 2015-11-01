@@ -1,4 +1,4 @@
-package com.company.Simulation.Behaviours.BahavioursBasics;
+package com.company.Simulation.Behaviours.BasicBahaviours;
 
 /**
  * Created by Szymon on 2015-11-01.

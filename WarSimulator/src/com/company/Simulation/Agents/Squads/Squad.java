@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Created by Szymon on 2015-10-27.
  */
-public class Squad {
+public abstract class Squad {
     protected Command comm;
     protected ArrayList<Soldier> squadSoldiers;
     public Teams team;
@@ -23,16 +23,16 @@ public class Squad {
         this.team = team;
     }
 
-    public void setSquad(int startCoordX, int startCoordY, int howManyInX, int howManyInY){
+    public abstract void setSquad(int startCoordX, int startCoordY, int howManyInX, int howManyInY);/*{
         Soldier sld;
         for(int i=0;i<howManyInX;i++){
             for(int j=0;j<howManyInY;j++) {
-                sld = new Soldier(this);
+                sld = new Soldier();
                 terrainMap.putSoldierOnPosition(sld, startCoordX+i, startCoordY+j);
                 squadSoldiers.add(sld);
             }
         }
-    }
+    }*/
 
     public void giveCommand()
     {
@@ -53,4 +53,6 @@ public class Squad {
             }
         }
     }
+
+    public ArrayList<Soldier> getSoldiers(){ return squadSoldiers; }
 }

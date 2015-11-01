@@ -1,7 +1,8 @@
-package com.company.Simulation.Behaviours;
+package com.company.Simulation.Behaviours.AgentsBehaviours;
 
 import com.company.Helper.CoordHelper.Coord;
 import com.company.Simulation.Agents.Soldiers.Archer;
+import com.company.Simulation.Behaviours.AgentsBehaviours.SoldierBehaviour;
 import com.company.Simulation.CommandType;
 
 /**
@@ -9,10 +10,16 @@ import com.company.Simulation.CommandType;
  */
 public class ArcherBehaviour extends SoldierBehaviour {
 
-    Archer soldier;
+    public Archer soldier;
 
     public ArcherBehaviour(Archer archer){
-        super(archer);
+        super();
+        soldier = archer;
+    }
+
+    @Override
+    public Archer getSoldier(){
+        return soldier;
     }
 
     @Override

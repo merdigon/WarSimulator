@@ -5,6 +5,8 @@ import com.company.Simulation.Agents.ArrowPhysic;
 import com.company.Simulation.Agents.Soldiers.Archer;
 import com.company.Simulation.Teams;
 
+import java.util.ArrayList;
+
 /**
  * Created by Szymon on 2015-10-31.
  */

@@ -1,7 +1,7 @@
 package com.company.Simulation.Behaviours;
 
 import com.company.Simulation.Agents.Soldiers.Soldier;
-import com.company.Simulation.Behaviours.BahavioursBasics.OneShotBehaviour;
+import com.company.Simulation.Behaviours.BasicBahaviours.OneShotBehaviour;
 
 /**
  * Created by Szymon on 2015-10-31.
