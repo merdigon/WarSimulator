@@ -12,9 +12,9 @@ public class Archer extends Soldier {
 
     protected ArcherSquad squad;
 
-    public Archer(ArcherSquad squad)
+    public Archer(ArcherSquad _squad)
     {
-        super(squad);
+        super(_squad);
     }
 
     @Override

@@ -24,8 +24,8 @@ public class GuiCreator extends JPanel {
 
 	public static final Color[] ARMIES = { ARMY, NOARMY, };
 
-	public static final int NUM_ROWS = 500;
-	public static final int NUM_COLS = 500;
+	public static final int NUM_ROWS = 40;
+	public static final int NUM_COLS = 50;
 
 	private final Color[][] armyGrid;
 
@@ -93,9 +93,9 @@ public class GuiCreator extends JPanel {
 		try {
 			image = ImageIO
 					.read(new File(
-							"C:\\Users\\Arkadiusz\\workspace\\WarSimulator\\src\\com\\company\\Gui\\final.png"));
+							"C:\\Users\\Szymon\\Documents\\GitHub\\WarSimulator\\WarSimulator\\out\\production\\WarSimulator\\com\\company\\Gui\\final.png"));
 		} catch (IOException ex) {
-
+			System.out.print("Lipka");
 		}
 		Image scaledImage = image.getScaledInstance(this.getWidth(),
 				this.getHeight(), Image.SCALE_SMOOTH);
@@ -128,7 +128,7 @@ public class GuiCreator extends JPanel {
 
 	public static void main(String[] args) {
 		// TO TEST GUI
-		// GuiCreator gui = new GuiCreator();
+		 GuiCreator gui = new GuiCreator();
 
 	}
 

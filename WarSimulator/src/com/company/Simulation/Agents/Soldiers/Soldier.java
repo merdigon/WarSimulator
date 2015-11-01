@@ -4,11 +4,12 @@ package com.company.Simulation.Agents.Soldiers;
  * Created by Szymon on 2015-10-16.
  */
 import com.company.Helper.CoordHelper.Coord;
+import com.company.Simulation.Agents.Agent;
 import com.company.Simulation.Agents.Squads.Squad;
 import com.company.Simulation.Command;
 import com.company.Simulation.Behaviours.SoldierBehaviour;
-import jade.core.Agent;
-import jade.core.behaviours.Behaviour;
+
+import java.util.ArrayList;
 
 public class Soldier extends Agent {
 
@@ -17,11 +18,11 @@ public class Soldier extends Agent {
     protected Squad squad;
     protected Coord soldCoord;
 
-    public Soldier(Squad squad){
-        squad = squad;
+    public Soldier(Squad _squad){
+        this.squad = _squad;
+        setup();
     }
 
-    @Override
     protected void setup()
     {
         addBehaviour(new SoldierBehaviour(this));

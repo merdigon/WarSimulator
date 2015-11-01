@@ -10,8 +10,8 @@ public class Warrior extends Soldier {
 
     protected WarriorSquad squad;
 
-    public Warrior(WarriorSquad squad) {
-        super(squad);
+    public Warrior(WarriorSquad _squad) {
+        super(_squad);
     }
 
     @Override

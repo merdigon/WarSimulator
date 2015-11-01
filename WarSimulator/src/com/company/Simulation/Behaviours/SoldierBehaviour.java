@@ -5,15 +5,15 @@ package com.company.Simulation.Behaviours;
  */
 import com.company.Helper.CoordHelper.Coord;
 import com.company.Simulation.Agents.Soldiers.Soldier;
+import com.company.Simulation.Behaviours.BahavioursBasics.CyclicBehaviour;
 import com.company.Simulation.CommandType;
-import jade.core.behaviours.CyclicBehaviour;
 
 import java.util.ArrayList;
 
-public class SoldierBehaviour extends CyclicBehaviour{
+public class SoldierBehaviour extends CyclicBehaviour {
 
-    //najwa¿niejsza klasa dla Soldier, która okreœla jego decyzjê, które podejmuje oraz symuluje jego psychikê
-    //rozwa¿yæ dodanie sprawdzania czy umar³ itp jako inne, ale te¿ cykliczne behaviour
+    //najwaï¿½niejsza klasa dla Soldier, ktï¿½ra okreï¿½la jego decyzjï¿½, ktï¿½re podejmuje oraz symuluje jego psychikï¿½
+    //rozwaï¿½yï¿½ dodanie sprawdzania czy umarï¿½ itp jako inne, ale teï¿½ cykliczne behaviour
     Soldier soldier;
     ArrayList<Soldier> noticedEnemies = new ArrayList<Soldier>();
     ArrayList<Soldier> noticedFriends = new ArrayList<Soldier>();
@@ -177,7 +177,6 @@ public class SoldierBehaviour extends CyclicBehaviour{
 
     protected void killSoldier(){
         soldier.getSquad().terrainMap.clearPosition((int)soldier.getCoord().getX(), (int)soldier.getCoord().getY());
-        soldier.getSquad().eliminateSoldier(soldier.getAID());
-        soldier.doDelete();
+        soldier.getSquad().eliminateSoldier(soldier);
     }
 }

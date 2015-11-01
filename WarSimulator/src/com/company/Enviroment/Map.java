@@ -18,9 +18,9 @@ public class Map {
         terrTrans.countTerrainData();
         double[][] terrainHeight =  terrTrans.terrainData;
         Terrain = new PointOfTerrain[terrTrans.imgWidth][terrTrans.imgHeight];
-        for(int i=0;i<terrTrans.imgHeight;i++)
+        for(int i=0;i<terrTrans.imgWidth;i++)
         {
-            for(int j=0;j<terrTrans.imgWidth;j++)
+            for(int j=0;j<terrTrans.imgHeight;j++)
             {
                 Terrain[i][j] = new PointOfTerrain(terrainHeight[i][j], KindOfTerrain.NORMAL);
             }
@@ -52,6 +52,11 @@ public class Map {
 
     public void clearPosition(int x, int y){
         Terrain[x][y].setSoldier(null);
+    }
+
+    public void putSoldierOnPosition(Soldier sold, int x, int y) {
+        Terrain[x][y].setSoldier(sold);
+        sold.setCoord(new Coord(x,y));
     }
 }
 

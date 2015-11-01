@@ -1,7 +1,7 @@
 package com.company.Simulation.Behaviours;
 
 import com.company.Simulation.Agents.Soldiers.Soldier;
-import jade.core.behaviours.OneShotBehaviour;
+import com.company.Simulation.Behaviours.BahavioursBasics.OneShotBehaviour;
 
 /**
  * Created by Szymon on 2015-10-31.

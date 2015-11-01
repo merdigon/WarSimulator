@@ -4,7 +4,6 @@ import com.company.Enviroment.Map;
 import com.company.Simulation.Agents.Soldiers.Soldier;
 import com.company.Simulation.Command;
 import com.company.Simulation.Teams;
-import jade.core.AID;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,14 +17,21 @@ public class Squad {
     public Teams team;
     public Map terrainMap;
 
-    public Squad(Teams team){
+    public Squad(Teams team, Map map){
+        terrainMap = map;
         squadSoldiers = new ArrayList<Soldier>();
         this.team = team;
     }
 
-    public void setSquad(int a){
-        for(int i=0;i<a;i++)
-            squadSoldiers.add(new Soldier(this));
+    public void setSquad(int startCoordX, int startCoordY, int howManyInX, int howManyInY){
+        Soldier sld;
+        for(int i=0;i<howManyInX;i++){
+            for(int j=0;j<howManyInY;j++) {
+                sld = new Soldier(this);
+                terrainMap.putSoldierOnPosition(sld, startCoordX+i, startCoordY+j);
+                squadSoldiers.add(sld);
+            }
+        }
     }
 
     public void giveCommand()
@@ -39,9 +45,9 @@ public class Squad {
         }
     }
 
-    public synchronized void eliminateSoldier(AID aid){
+    public synchronized void eliminateSoldier(Soldier sold){
         for(int i=0;i<squadSoldiers.size();i++){
-            if(squadSoldiers.get(i).getAID() == aid) {
+            if(squadSoldiers.get(i) == sold) {
                 squadSoldiers.remove(i);
                 return;
             }
