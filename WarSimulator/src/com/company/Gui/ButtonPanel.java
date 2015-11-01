@@ -25,7 +25,8 @@ public class ButtonPanel extends JPanel {
 					public void run() {
 
 						while (!Thread.currentThread().isInterrupted()) {
-							p.updateUI();
+							// do sth
+							//p.updateUI();
 						}
 
 					}

@@ -17,12 +17,17 @@ import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import com.company.Enviroment.Map;
+import com.company.Enviroment.PointOfTerrain;
+import com.company.Simulation.Teams;
+import com.company.Simulation.Agents.Soldiers.Soldier;
+
 public class GuiCreator extends JPanel {
 
-	public static final Color ARMY = new Color(255, 0, 0);
-	public static final Color NOARMY = new Color(0, 0, 0, 0);
+	public static final Color RED_ARMY = new Color(255, 0, 0);
+	public static final Color BLUE_ARMY = new Color(0, 0, 255);
 
-	public static final Color[] ARMIES = { ARMY, NOARMY, };
+	public static final Color[] ARMIES = { RED_ARMY, BLUE_ARMY, };
 
 	public static final int NUM_ROWS = 40;
 	public static final int NUM_COLS = 50;
@@ -49,17 +54,17 @@ public class GuiCreator extends JPanel {
 
 	private void createMap() {
 
-		Random r = new Random();
-		for (int i = 0; i < NUM_ROWS; i++) {
-			for (int j = 0; j < NUM_COLS; j++) {
-				Color randomColor = ARMIES[r.nextInt(2)];
-				this.armyGrid[i][j] = randomColor;
-			}
-		}
+//		Random r = new Random();
+//		for (int i = 0; i < NUM_ROWS; i++) {
+//			for (int j = 0; j < NUM_COLS; j++) {
+//				Color randomColor = ARMIES[r.nextInt(2)];
+//				this.armyGrid[i][j] = randomColor;
+//			}
+//		}
 		setPreferredSize(new Dimension(this.getWidth(), this.getHeight()));
 	}
 
-	public void changeGrid(Color[][] grid) {
+	public void changeGrid(Map m) {
 		// Clear grid
 		for (int i = 0; i < NUM_ROWS; i++) {
 			for (int j = 0; j < NUM_COLS; j++) {
@@ -68,32 +73,32 @@ public class GuiCreator extends JPanel {
 		}
 
 		int i = 0;
-		for (Color[] ct : grid) {
+		for (PointOfTerrain[] tp : m.Terrain) {
 			int j = 0;
-			for (Color c : ct) {
-				this.armyGrid[i][j] = c;
+			for (PointOfTerrain p : tp) {
+				Soldier s = p.getSoldier();
+				if(s != null){
+					if(s.getSquad().team == Teams.RED)
+						this.armyGrid[i][j] = ARMIES[0];
+					else if(s.getSquad().team == Teams.BLUE)
+						this.armyGrid[i][j] = ARMIES[1];
+				}
 				j++;
 			}
 			i++;
 		}
+		updateUI();
 	}
 
 	@Override
 	public void paintComponent(Graphics g) {
 
-		Random r = new Random();
-		for (int i = 0; i < NUM_ROWS; i++) {
-			for (int j = 0; j < NUM_COLS; j++) {
-				Color randomColor = ARMIES[r.nextInt(2)];
-				this.armyGrid[i][j] = randomColor;
-			}
-		}
 
 		BufferedImage image = null;
 		try {
 			image = ImageIO
 					.read(new File(
-							"C:\\Users\\Szymon\\Documents\\GitHub\\WarSimulator\\WarSimulator\\out\\production\\WarSimulator\\com\\company\\Gui\\final.png"));
+							"ABS\\PATH\\final.png")); //TODO: insert your own abs path
 		} catch (IOException ex) {
 			System.out.print("Lipka");
 		}
