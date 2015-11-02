@@ -26,6 +26,8 @@ public abstract class Squad {
         this.battle = battle;
     }
 
+    public abstract void executePhysic();
+
     public abstract void setCommand();
 
     public abstract void setSquad(int startCoordX, int startCoordY, int howManyInX, int howManyInY);/*{

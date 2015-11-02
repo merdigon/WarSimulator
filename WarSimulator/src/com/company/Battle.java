@@ -2,6 +2,7 @@ package com.company;
 
 import com.company.Enviroment.Map;
 import com.company.Gui.GuiCreator;
+import com.company.Simulation.Agents.ArrowPhysic;
 import com.company.Simulation.Agents.Commander;
 import com.company.Simulation.Agents.Soldiers.Soldier;
 import com.company.Simulation.Agents.Squads.ArcherSquad;
@@ -48,8 +49,9 @@ public class Battle {
         if(((System.nanoTime()-lastCycle)/1000000) > 1000) {
             lastCycle = System.nanoTime();
 
-            for(Squad squad : squads)
+            for(Squad squad : squads) {
                 squad.setCommand();
+            }
 
             for (Squad squad : squads) {
                 squad.giveCommand();
@@ -59,8 +61,10 @@ public class Battle {
                         sold.executeBehaviours();
                 }
             }
-
             gui.changeGrid(squads[0].terrainMap);
         }
+
+        for (Squad squad : squads)
+            squad.executePhysic();
     }
 }
