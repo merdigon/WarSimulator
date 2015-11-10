@@ -60,7 +60,7 @@ public class ArcherBehaviour extends SoldierBehaviour {
                 int attackX = (int)soldier.getCommand().getPossition().getX() + ((int)(gen.nextDouble()*4)) * (gen.nextBoolean()?1:(-1));
                 int attackY = (int)soldier.getCommand().getPossition().getY() + ((int)(gen.nextDouble()*4)) * (gen.nextBoolean()?1:(-1));
                 if(attackX>0 && attackY>0)
-                    getSoldier().getSquad().arrowPhysic.setNewArrowAttack(attackX, attackY);
+                    getSoldier().getSquad().arrowPhysic.setNewArrowAttack((int)getSoldier().getCoord().getX(), (int)getSoldier().getCoord().getY(), attackX, attackY);
             }
             return true;
         }
@@ -68,7 +68,7 @@ public class ArcherBehaviour extends SoldierBehaviour {
     }
 
     protected void archeryAttack(int x, int y) {
-        soldier.getSquad().arrowPhysic.setNewArrowAttack(x, y);
+        soldier.getSquad().arrowPhysic.setNewArrowAttack((int)soldier.getCoord().getX(), (int)soldier.getCoord().getY(), x, y);
     }
 }
 

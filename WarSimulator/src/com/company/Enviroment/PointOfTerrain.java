@@ -9,6 +9,7 @@ public class PointOfTerrain {
     double height;
     KindOfTerrain kindOfTerrain;
     Soldier soldierOnThisPlace;
+    boolean isArrow = false;
 
     public PointOfTerrain(double height, KindOfTerrain kOfTerr) {
         this.height = height;
@@ -38,4 +39,10 @@ public class PointOfTerrain {
     public KindOfTerrain getTerrainKind() {
         return this.kindOfTerrain;
     }
+
+    public void setArrowHit() { isArrow=true; }
+
+    public boolean getArrowHit() { return isArrow; }
+
+    public void resetArrowHit() { isArrow=false; }
 }

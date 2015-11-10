@@ -28,7 +28,7 @@ public class ArcherSquad extends Squad{
     public void executePhysic() {
         arrowPhysic.executeBehaviours();
     }
-
+    /*
     @Override
     public void setCommand() {
         if(team == Teams.BLUE){
@@ -74,7 +74,7 @@ public class ArcherSquad extends Squad{
                 }
             }
         }
-    }
+    }*/
 
     @Override
     public void setSquad(int startCoordX, int startCoordY, int howManyInX, int howManyInY){

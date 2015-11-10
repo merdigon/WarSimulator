@@ -1,14 +1,16 @@
 package com.company.Simulation;
 
 import com.company.Helper.CoordHelper.Coord;
+import com.company.Simulation.Agents.Squads.Squad;
 
 /**
  * Created by Szymon on 2015-10-27.
  */
 public class Command {
 
-    Coord possition;
+    Coord possition = null;
     CommandType command;
+    Squad squad;
 
     public Command(CommandType cmdtype){
         command = cmdtype;
@@ -24,4 +26,8 @@ public class Command {
     public void setPossition(Coord possition) { this.possition = possition; }
 
     public CommandType getCommType() {return command;}
+
+    public Squad getSquad() { return squad; }
+
+    public void setSquad(Squad squad) { this.squad = squad; }
 }

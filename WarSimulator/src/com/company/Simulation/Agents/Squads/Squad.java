@@ -28,7 +28,9 @@ public abstract class Squad {
 
     public abstract void executePhysic();
 
-    public abstract void setCommand();
+    public void setCommand(Command comm){
+        this.comm = comm;
+    }
 
     public abstract void setSquad(int startCoordX, int startCoordY, int howManyInX, int howManyInY);/*{
         Soldier sld;
