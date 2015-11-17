@@ -19,11 +19,8 @@ public class WarriorSquad extends Squad {
     }
 
     @Override
-    public void executePhysic() {
+    public void executePhysic() {}
 
-    }
-
-    @Override
     public void setCommand(){
 
         if(team == Teams.BLUE){
