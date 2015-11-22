@@ -2,8 +2,12 @@ package com.company.Simulation.Agents.Squads;
 
 import com.company.Battle;
 import com.company.Enviroment.Map;
+import com.company.Helper.CoordHelper.Coord;
 import com.company.Simulation.Agents.ArrowPhysic;
 import com.company.Simulation.Agents.Soldiers.Archer;
+import com.company.Simulation.Agents.Soldiers.Soldier;
+import com.company.Simulation.Command;
+import com.company.Simulation.CommandType;
 import com.company.Simulation.Teams;
 
 import java.util.ArrayList;
@@ -13,16 +17,64 @@ import java.util.ArrayList;
  */
 public class ArcherSquad extends Squad{
 
-    public ArrowPhysic arrowPhysic = new ArrowPhysic();
+    public ArrowPhysic arrowPhysic;
 
     public ArcherSquad(Teams team, Map map, Battle battle){
         super(team, map, battle);
+        arrowPhysic = new ArrowPhysic(map);
     }
 
     @Override
-    public void setCommand() {
-
+    public void executePhysic() {
+        arrowPhysic.executeBehaviours();
     }
+    /*
+    @Override
+    public void setCommand() {
+        if(team == Teams.BLUE){
+            comm = null;
+            for(Soldier sold : battle.squads[3].getSoldiers()){
+                if(sold.getStatus())
+                {
+                    comm = new Command(CommandType.ATTACK);
+                    comm.setPossition(new Coord(sold.getCoord().getX(), sold.getCoord().getY()));
+                    break;
+                }
+            }
+            if(comm==null){
+                for(Soldier sold : battle.squads[2].getSoldiers()){
+                    if(sold.getStatus())
+                    {
+                        comm = new Command(CommandType.ATTACK);
+                        comm.setPossition(new Coord(sold.getCoord().getX(), sold.getCoord().getY()));
+                        break;
+                    }
+                }
+            }
+
+        }
+        if(team == Teams.RED){
+            comm = null;
+            for(Soldier sold : battle.squads[1].getSoldiers()){
+                if(sold.getStatus()) {
+                    comm = new Command(CommandType.ATTACK);
+                    comm.setPossition(new Coord(sold.getCoord().getX(), sold.getCoord().getY()));
+                    break;
+                }
+            }
+            if(comm==null)
+            {
+                for(Soldier sold : battle.squads[0].getSoldiers()){
+                    if(sold.getStatus())
+                    {
+                        comm = new Command(CommandType.ATTACK);
+                        comm.setPossition(new Coord(sold.getCoord().getX(), sold.getCoord().getY()));
+                        break;
+                    }
+                }
+            }
+        }
+    }*/
 
     @Override
     public void setSquad(int startCoordX, int startCoordY, int howManyInX, int howManyInY){

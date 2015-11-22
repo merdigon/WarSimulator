@@ -21,8 +21,11 @@ public class TerrainTranslator extends Component{
 
     public TerrainTranslator(){
         try {
-            terrain = ImageIO.read(TerrainTranslator.class.getClassLoader().getResourceAsStream("terrain.png"));
-            imgWidth = terrain.getWidth();
+            terrain = ImageIO
+					.read(new File(
+							"C:\\Users\\Szymon\\Documents\\GitHub\\WarSimulator\\WarSimulator\\out\\production\\terrain.png")); //TODO: insert your own abs path
+
+			imgWidth = terrain.getWidth();
             imgHeight = terrain.getHeight();
             terrainData = new double[imgWidth][imgHeight];
             for(int i=0; i<terrain.getHeight(); i++)

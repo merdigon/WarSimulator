@@ -6,5 +6,6 @@ package com.company.Simulation;
 public enum CommandType{
     MOVEMENT,
     ATTACK,
-    BACK
+    BACK,
+    HOLD_POSSITION
 }
