@@ -4,6 +4,7 @@ import com.company.Battle;
 import com.company.Enviroment.Map;
 import com.company.Helper.CoordHelper.Coord;
 import com.company.Simulation.Agents.ArrowPhysic;
+import com.company.Simulation.Agents.Commander;
 import com.company.Simulation.Agents.Soldiers.Archer;
 import com.company.Simulation.Agents.Soldiers.Soldier;
 import com.company.Simulation.Command;
@@ -19,8 +20,8 @@ public class ArcherSquad extends Squad{
 
     public ArrowPhysic arrowPhysic;
 
-    public ArcherSquad(Teams team, Map map, Battle battle){
-        super(team, map, battle);
+    public ArcherSquad(Teams team, Map map, Battle battle, Commander commander){
+        super(team, map, battle, commander);
         arrowPhysic = new ArrowPhysic(map);
     }
 
@@ -77,7 +78,7 @@ public class ArcherSquad extends Squad{
     }*/
 
     @Override
-    public void setSquad(int startCoordX, int startCoordY, int howManyInX, int howManyInY){
+    public ArcherSquad setSquad(int startCoordX, int startCoordY, int howManyInX, int howManyInY){
         Archer sld;
         for(int i=0;i<howManyInX;i++){
             for(int j=0;j<howManyInY;j++) {
@@ -86,5 +87,6 @@ public class ArcherSquad extends Squad{
                 squadSoldiers.add(sld);
             }
         }
+        return this;
     }
 }

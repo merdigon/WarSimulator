@@ -2,6 +2,7 @@ package com.company.Simulation.Agents.Squads;
 
 import com.company.Battle;
 import com.company.Enviroment.Map;
+import com.company.Simulation.Agents.Commander;
 import com.company.Simulation.Agents.Soldiers.Cavalry;
 import com.company.Simulation.Teams;
 
@@ -10,15 +11,15 @@ import com.company.Simulation.Teams;
  */
 public class CavalrySquad extends Squad {
 
-    public CavalrySquad(Teams team, Map terrain, Battle battle) {
-        super(team, terrain, battle);
+    public CavalrySquad(Teams team, Map terrain, Battle battle, Commander commander) {
+        super(team, terrain, battle, commander);
     }
 
     @Override
     public void executePhysic() {}
 
     @Override
-    public void setSquad(int startCoordX, int startCoordY, int howManyInX, int howManyInY) {
+    public CavalrySquad setSquad(int startCoordX, int startCoordY, int howManyInX, int howManyInY) {
         Cavalry sld;
         for(int i=0;i<howManyInX;i++){
             for(int j=0;j<howManyInY;j++) {
@@ -27,5 +28,6 @@ public class CavalrySquad extends Squad {
                 squadSoldiers.add(sld);
             }
         }
+        return this;
     }
 }

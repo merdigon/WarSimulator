@@ -3,6 +3,7 @@ package com.company.Simulation.Agents.Squads;
 import com.company.Battle;
 import com.company.Enviroment.Map;
 import com.company.Helper.CoordHelper.Coord;
+import com.company.Simulation.Agents.Commander;
 import com.company.Simulation.Agents.Soldiers.Soldier;
 import com.company.Simulation.Agents.Soldiers.Warrior;
 import com.company.Simulation.Command;
@@ -14,15 +15,15 @@ import com.company.Simulation.Teams;
  */
 public class WarriorSquad extends Squad {
 
-    public WarriorSquad(Teams team, Map terrain, Battle battle) {
-        super(team, terrain, battle);
+    public WarriorSquad(Teams team, Map terrain, Battle battle, Commander commander) {
+        super(team, terrain, battle, commander);
     }
 
     @Override
     public void executePhysic() {}
 
     public void setCommand(){
-
+/*
         if(team == Teams.BLUE){
             comm = null;
             for(Soldier sold : battle.squads[3].getSoldiers()){
@@ -65,11 +66,11 @@ public class WarriorSquad extends Squad {
                     }
                 }
             }
-        }
+        }*/
     }
 
     @Override
-    public void setSquad(int startCoordX, int startCoordY, int howManyInX, int howManyInY){
+    public WarriorSquad setSquad(int startCoordX, int startCoordY, int howManyInX, int howManyInY){
         Warrior sld;
         for(int i=0;i<howManyInX;i++){
             for(int j=0;j<howManyInY;j++) {
@@ -78,5 +79,6 @@ public class WarriorSquad extends Squad {
                 squadSoldiers.add(sld);
             }
         }
+        return this;
     }
 }

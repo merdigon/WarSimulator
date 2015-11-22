@@ -2,6 +2,7 @@ package com.company.Simulation.Agents.Squads;
 
 import com.company.Battle;
 import com.company.Enviroment.Map;
+import com.company.Simulation.Agents.Commander;
 import com.company.Simulation.Agents.Soldiers.Soldier;
 import com.company.Simulation.Command;
 import com.company.Simulation.Teams;
@@ -16,14 +17,16 @@ public abstract class Squad {
     protected Command comm;
     protected ArrayList<Soldier> squadSoldiers;
     protected Battle battle;
+    protected Commander commander;
     public Teams team;
     public Map terrainMap;
 
-    public Squad(Teams team, Map map, Battle battle){
+    public Squad(Teams team, Map map, Battle battle, Commander commander){
         terrainMap = map;
         squadSoldiers = new ArrayList<>();
         this.team = team;
         this.battle = battle;
+        this.commander = commander;
     }
 
     public abstract void executePhysic();
@@ -32,7 +35,7 @@ public abstract class Squad {
         this.comm = comm;
     }
 
-    public abstract void setSquad(int startCoordX, int startCoordY, int howManyInX, int howManyInY);/*{
+    public abstract Squad setSquad(int startCoordX, int startCoordY, int howManyInX, int howManyInY);/*{
         Soldier sld;
         for(int i=0;i<howManyInX;i++){
             for(int j=0;j<howManyInY;j++) {
