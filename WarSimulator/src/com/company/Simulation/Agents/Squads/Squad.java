@@ -2,6 +2,7 @@ package com.company.Simulation.Agents.Squads;
 
 import com.company.Battle;
 import com.company.Enviroment.Map;
+import com.company.Simulation.Agents.Agent;
 import com.company.Simulation.Agents.Commander;
 import com.company.Simulation.Agents.Soldiers.Soldier;
 import com.company.Simulation.Command;
@@ -13,7 +14,7 @@ import java.util.List;
 /**
  * Created by Szymon on 2015-10-27.
  */
-public abstract class Squad {
+public abstract class Squad extends Agent{
     protected Command comm;
     protected ArrayList<Soldier> squadSoldiers;
     protected Battle battle;
@@ -27,9 +28,16 @@ public abstract class Squad {
         this.team = team;
         this.battle = battle;
         this.commander = commander;
+        setup();
     }
 
+    protected abstract void setup();
+
     public abstract void executePhysic();
+
+    public Command getCommand(){
+        return comm;
+    }
 
     public void setCommand(Command comm){
         this.comm = comm;

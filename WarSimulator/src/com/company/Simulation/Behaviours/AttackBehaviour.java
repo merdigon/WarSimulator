@@ -22,6 +22,7 @@ public class AttackBehaviour extends OneShotBehaviour {
     @Override
     public void action() {
         //co jezeli zolnierz zostanie trafiony
+        //obliczanie obra¿eñ na podstawie ró¿nicy wysokoœci
         double attackHeight = attacker.getSquad().terrainMap.Terrain[(int)attacker.getCoord().getX()][(int)attacker.getCoord().getY()].getHeight();
         double defenderHeight = defender.getSquad().terrainMap.Terrain[(int)defender.getCoord().getX()][(int)defender.getCoord().getY()].getHeight();
         double percentHeight = (attackHeight-defenderHeight)/10;
@@ -40,6 +41,7 @@ public class AttackBehaviour extends OneShotBehaviour {
         else if (percentHeight<-0.4)
             addPoint=-3;
 
+        //super trudny algorytm obliczaj¹cy szanse na trafienie na podstawie wysokoœci
         if((generator.nextDouble()*10)>(4-addPoint)) {
             defender.changeHp(40);
         }

@@ -31,8 +31,8 @@ public class Battle {
     }
 
     public void init(){
-        commanders[0] = new Commander(Teams.BLUE, 2, terrainMap);
-        commanders[1] = new Commander(Teams.RED, 2, terrainMap);
+        commanders[0] = new Commander(Teams.BLUE, terrainMap);
+        commanders[1] = new Commander(Teams.RED, terrainMap);
         createBothSquads();
     }
 

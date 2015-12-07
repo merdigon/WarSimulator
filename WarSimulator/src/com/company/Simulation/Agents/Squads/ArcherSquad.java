@@ -7,6 +7,7 @@ import com.company.Simulation.Agents.ArrowPhysic;
 import com.company.Simulation.Agents.Commander;
 import com.company.Simulation.Agents.Soldiers.Archer;
 import com.company.Simulation.Agents.Soldiers.Soldier;
+import com.company.Simulation.Behaviours.AgentsBehaviours.ArcherySquadBehaviour;
 import com.company.Simulation.Command;
 import com.company.Simulation.CommandType;
 import com.company.Simulation.Teams;
@@ -23,6 +24,11 @@ public class ArcherSquad extends Squad{
     public ArcherSquad(Teams team, Map map, Battle battle, Commander commander){
         super(team, map, battle, commander);
         arrowPhysic = new ArrowPhysic(map);
+    }
+
+    @Override
+    protected void setup(){
+        addBehaviour(new ArcherySquadBehaviour(commander, this));
     }
 
     @Override

@@ -4,6 +4,7 @@ import com.company.Battle;
 import com.company.Enviroment.Map;
 import com.company.Simulation.Agents.Commander;
 import com.company.Simulation.Agents.Soldiers.Cavalry;
+import com.company.Simulation.Behaviours.AgentsBehaviours.CavalrySquadBehaviour;
 import com.company.Simulation.Teams;
 
 /**
@@ -17,6 +18,11 @@ public class CavalrySquad extends Squad {
 
     @Override
     public void executePhysic() {}
+
+    @Override
+    protected void setup(){
+        addBehaviour(new CavalrySquadBehaviour(commander, this));
+    }
 
     @Override
     public CavalrySquad setSquad(int startCoordX, int startCoordY, int howManyInX, int howManyInY) {

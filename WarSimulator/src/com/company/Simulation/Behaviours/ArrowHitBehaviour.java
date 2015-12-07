@@ -24,6 +24,8 @@ public class ArrowHitBehaviour extends OneShotBehaviour {
         //!!!!! dodawaæ tylko te rzeczy, które nie zale¿¹ od jego decyzji
         //za decyzjê odpowiada behaviour SoldierBehaviour
         //tutaj dodaæ tylko utratê ¿ycia, ewentualnie œmieræ
+
+        //W sumie ju¿ jest dodane, nie ma co rozszerzaæ
         Random gen = new Random();
         if(gen.nextDouble()*10>4)
             hitSoldier.changeHp(30);

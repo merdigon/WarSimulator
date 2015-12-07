@@ -6,6 +6,8 @@ import com.company.Helper.CoordHelper.Coord;
 import com.company.Simulation.Agents.Commander;
 import com.company.Simulation.Agents.Soldiers.Soldier;
 import com.company.Simulation.Agents.Soldiers.Warrior;
+import com.company.Simulation.Behaviours.AgentsBehaviours.ArcherySquadBehaviour;
+import com.company.Simulation.Behaviours.AgentsBehaviours.WarriorSquadBehaviour;
 import com.company.Simulation.Command;
 import com.company.Simulation.CommandType;
 import com.company.Simulation.Teams;
@@ -17,6 +19,11 @@ public class WarriorSquad extends Squad {
 
     public WarriorSquad(Teams team, Map terrain, Battle battle, Commander commander) {
         super(team, terrain, battle, commander);
+    }
+
+    @Override
+    protected void setup(){
+        addBehaviour(new WarriorSquadBehaviour(commander, this));
     }
 
     @Override
