@@ -77,4 +77,8 @@ public abstract class Squad extends Agent{
     }
 
     public ArrayList<Soldier> getSoldiers(){ return squadSoldiers; }
+
+    public Teams getTeam() {
+        return this.team;
+    }
 }

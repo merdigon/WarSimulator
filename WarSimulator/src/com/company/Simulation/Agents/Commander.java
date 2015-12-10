@@ -21,6 +21,18 @@ public class Commander extends Agent {
         setup();
     }
 
+    public Battle getBattle(){
+        return this.battle;
+    }
+
+    public Teams getTeam(){
+        return this.commTeam;
+    }
+
+    public Map getMap(){
+        return this.terrainMap;
+    }
+
     protected void setup(){
         addBehaviour(new CommanderBehaviour(this));
     }

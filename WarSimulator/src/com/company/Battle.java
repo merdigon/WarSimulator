@@ -89,4 +89,7 @@ public class Battle {
             }
         }
     }
+    public Squad[] getSquads(){
+        return this.squads;
+    }
 }
