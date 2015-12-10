@@ -24,6 +24,7 @@ public class ArcherSquad extends Squad{
     public ArcherSquad(Teams team, Map map, Battle battle, Commander commander){
         super(team, map, battle, commander);
         arrowPhysic = new ArrowPhysic(map);
+        squadType = SquadType.Archer;
     }
 
     @Override

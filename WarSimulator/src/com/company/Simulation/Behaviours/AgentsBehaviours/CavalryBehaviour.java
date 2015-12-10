@@ -18,4 +18,16 @@ public class CavalryBehaviour extends SoldierBehaviour {
     public Cavalry getSoldier() {
         return soldier;
     }
+
+    private void ifDecideToNotMove(){
+        soldier.setVelocity(500);
+    }
+
+    private void ifDecideToMove(){
+        double vel = soldier.getVelocity() - soldier.getVelocityStep();
+        if(vel < soldier.getMaxVelocity())
+            soldier.setVelocity(soldier.getMaxVelocity());
+        else
+            soldier.setVelocity(vel);
+    }
 }

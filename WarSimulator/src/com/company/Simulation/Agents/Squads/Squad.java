@@ -21,6 +21,7 @@ public abstract class Squad extends Agent{
     protected Commander commander;
     public Teams team;
     public Map terrainMap;
+    public SquadType squadType;
 
     public Squad(Teams team, Map map, Battle battle, Commander commander){
         terrainMap = map;

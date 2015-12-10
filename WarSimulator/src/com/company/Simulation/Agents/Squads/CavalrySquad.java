@@ -14,6 +14,7 @@ public class CavalrySquad extends Squad {
 
     public CavalrySquad(Teams team, Map terrain, Battle battle, Commander commander) {
         super(team, terrain, battle, commander);
+        squadType = SquadType.Cavalry;
     }
 
     @Override

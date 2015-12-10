@@ -4,11 +4,9 @@ import com.company.Enviroment.Map;
 import com.company.Gui.GuiCreator;
 import com.company.Simulation.Agents.ArrowPhysic;
 import com.company.Simulation.Agents.Commander;
+import com.company.Simulation.Agents.Soldiers.Cavalry;
 import com.company.Simulation.Agents.Soldiers.Soldier;
-import com.company.Simulation.Agents.Squads.ArcherSquad;
-import com.company.Simulation.Agents.Squads.CavalrySquad;
-import com.company.Simulation.Agents.Squads.Squad;
-import com.company.Simulation.Agents.Squads.WarriorSquad;
+import com.company.Simulation.Agents.Squads.*;
 import com.company.Simulation.Teams;
 
 /**
@@ -20,6 +18,7 @@ public class Battle {
     public Commander[] commanders;
     GuiCreator gui;
     Squad[] squads;
+    long lastSoldiersCycle;
     long lastCycle;
 
 
@@ -27,6 +26,7 @@ public class Battle {
         terrainMap = new Map();
         commanders = new Commander[2];
         gui = new GuiCreator();
+        lastSoldiersCycle = System.nanoTime();
         lastCycle = System.nanoTime();
     }
 
@@ -55,26 +55,38 @@ public class Battle {
         }
     }
 
-    public void lifeCycle(){
-        if(((System.nanoTime()-lastCycle)/1000000) > 1000) {
-            lastCycle = System.nanoTime();
-
-            //for(Squad squad : squads) {
-            //    squad.setCommand();
-            //}
+    public void lifeCycle() {
+        lastCycle = System.nanoTime();
+        if (((System.nanoTime() - lastSoldiersCycle) / 1000000) > 1000) {
+            lastSoldiersCycle = System.nanoTime();
 
             for (Squad squad : squads) {
-                squad.giveCommand();
 
                 for (Soldier sold : squad.getSoldiers()) {
-                    if(sold.getStatus())
+                    if (sold.getStatus())
                         sold.executeBehaviours();
                 }
             }
-            gui.changeGrid(squads[0].terrainMap);
         }
 
+        gui.changeGrid(squads[0].terrainMap);
         for (Squad squad : squads)
-            squad.executePhysic();
+            squad.executeBehaviours();
+
+        for (Commander comm : commanders) {
+            comm.executeBehaviours();
+        }
+
+        for (Squad squad : squads) {
+            if (squad.squadType == SquadType.Cavalry) {
+                for (Soldier sld : squad.getSoldiers()) {
+                    ((Cavalry) sld).addTimeAfterLastThinking((System.nanoTime() - lastCycle) / 1000000);
+                    if (((Cavalry) sld).getTimeAfterLastThinking() >= ((Cavalry) sld).getVelocity()) {
+                        sld.executeBehaviours();
+                        ((Cavalry) sld).setTimeAfterLastThinking(0);
+                    }
+                }
+            }
+        }
     }
 }

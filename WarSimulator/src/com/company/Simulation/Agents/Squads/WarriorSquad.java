@@ -19,6 +19,7 @@ public class WarriorSquad extends Squad {
 
     public WarriorSquad(Teams team, Map terrain, Battle battle, Commander commander) {
         super(team, terrain, battle, commander);
+        squadType = SquadType.Warrior;
     }
 
     @Override

@@ -53,9 +53,11 @@ public abstract class SquadBehaviour extends CyclicBehaviour {
             return;
 
         for(Soldier sold: squad.getSoldiers()){
-            if(commForSoldiers != null && vectorToMove != null && commForSoldiers.getPossition()!= null)
-                //to jest b³êdne, powinno siê robiæ apply vector dla koordów ¿o³nierza
-                commForSoldiers.getPossition().applyVector(vectorToMove);
+            if(commForSoldiers != null && vectorToMove != null && commForSoldiers.getPossition()!= null) {
+                Coord tmp = sold.getCoord().clone();
+                tmp.applyVector(vectorToMove);
+                commForSoldiers.setPossition(tmp);
+            }
 
             sold.setCommand(commForSoldiers);
         }
@@ -78,7 +80,7 @@ public abstract class SquadBehaviour extends CyclicBehaviour {
         commForSoldiers = new Command(CommandType.HOLD_POSSITION);
     }
 
-    //to samo co mów, ale ¿o³nierz¹ przekazuje siê negatyw, czy vector przeciwny
+    //to samo co move, ale ¿o³nierz¹ przekazuje siê negatyw, czyli vector przeciwny
     protected void ifBack() {
         Coord squadMed = SquadHelper.getMiddlePointOfSquad(squad);
         Coord enemyMed = SquadHelper.getMiddlePointOfSquad(commFromCommander.getSquad());
