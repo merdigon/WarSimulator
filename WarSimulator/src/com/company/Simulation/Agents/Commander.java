@@ -1,5 +1,6 @@
 package com.company.Simulation.Agents;
 
+import com.company.Battle;
 import com.company.Enviroment.Map;
 import com.company.Simulation.Behaviours.AgentsBehaviours.CommanderBehaviour;
 import com.company.Simulation.Command;
@@ -11,9 +12,12 @@ import com.company.Simulation.Teams;
 public class Commander extends Agent {
     Teams commTeam;
     Map terrainMap;
+    Battle battle;
 
-    public Commander(Teams team, Map battleMap){
+    public Commander(Teams team, Map battleMap, Battle battle){
         commTeam = team;
+        terrainMap = battleMap;
+        this.battle = battle;
         setup();
     }
 
