@@ -9,6 +9,9 @@ import com.company.Simulation.Behaviours.BasicBahaviours.CyclicBehaviour;
 import com.company.Simulation.Command;
 import com.company.Simulation.CommandType;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public class CommanderBehaviour extends CyclicBehaviour {
 
     Commander comm;
@@ -120,18 +123,18 @@ public class CommanderBehaviour extends CyclicBehaviour {
             startRangeY = 0;
         }
         Squad[] squads = comm.getBattle().getSquads();
-        Squad squadToAttack = null;
+        List<Squad> squadToAttack = new LinkedList<>();
         for(Squad enemySquad:squads){
             if(enemySquad.getTeam() != s.getTeam()) {
                 double enemyX = SquadHelper.getMiddlePointOfSquad(enemySquad).getX();
                 double enemyY = SquadHelper.getMiddlePointOfSquad(enemySquad).getY();
                 if(enemyX - startRangeX <= 0 && enemyX - stopRangeX >= 0 && enemyY - startRangeY >=0 && enemyY - stopRangeY <= 0) {
-                    squadToAttack = enemySquad;
-                    break;
+                    squadToAttack.add(enemySquad);
                 }
             }
         }
-        return squadToAttack;
+        return getClosest(squadToAttack, Double.valueOf(SquadHelper.getMiddlePointOfSquad(s).getX()).intValue(),
+                Double.valueOf(SquadHelper.getMiddlePointOfSquad(s).getY()).intValue());
     }
 
     private Squad archerRunAwayFromEnemy(Squad s){
@@ -149,17 +152,18 @@ public class CommanderBehaviour extends CyclicBehaviour {
             startRangeY = 0;
         }
         Squad[] squads = comm.getBattle().getSquads();
-        Squad squadToRunAway = null;
+        List<Squad> squadToRunAway = new LinkedList<>();
         for(Squad enemySquad:squads){
             if(enemySquad.getTeam() != s.getTeam()) {
                 double enemyX = SquadHelper.getMiddlePointOfSquad(enemySquad).getX();
                 double enemyY = SquadHelper.getMiddlePointOfSquad(enemySquad).getY();
                 if(enemyX - startRangeX <= 0 && enemyX - stopRangeX >= 0 && enemyY - startRangeY >=0 && enemyY - stopRangeY <= 0) {
-                    squadToRunAway = enemySquad;
+                    squadToRunAway.add(enemySquad);
                 }
             }
         }
-        return squadToRunAway;
+        return getClosest(squadToRunAway, Double.valueOf(SquadHelper.getMiddlePointOfSquad(s).getX()).intValue(),
+                Double.valueOf(SquadHelper.getMiddlePointOfSquad(s).getY()).intValue());
     }
 
     private Squad regroup(Squad s){
@@ -177,16 +181,35 @@ public class CommanderBehaviour extends CyclicBehaviour {
             startRangeY = 0;
         }
         Squad[] squads = comm.getBattle().getSquads();
-        Squad squadToMerge = null;
+        List<Squad> squadToMerge = new LinkedList<>();
         for(Squad alliedSquad:squads){
             if(alliedSquad.getTeam() == s.getTeam() && alliedSquad != s && alliedSquad.squadType == s.squadType) {
                 double allyX = SquadHelper.getMiddlePointOfSquad(alliedSquad).getX();
                 double allyY = SquadHelper.getMiddlePointOfSquad(alliedSquad).getY();
                 if(allyX - startRangeX <= 0 && allyX - stopRangeX >= 0 && allyY - startRangeY >=0 && allyY - stopRangeY <= 0) {
-                    squadToMerge = alliedSquad;
+                    squadToMerge.add(alliedSquad);
                 }
             }
         }
-        return squadToMerge;
+        return getClosest(squadToMerge, Double.valueOf(SquadHelper.getMiddlePointOfSquad(s).getX()).intValue(),
+                Double.valueOf(SquadHelper.getMiddlePointOfSquad(s).getY()).intValue());
+    }
+
+    private Squad getClosest(List<Squad> squadList, int X, int Y) {
+        if(squadList.size() == 0){
+            return null;
+        }
+        Squad closestSquad = null;
+        double closest = 999999999;
+        for(Squad s:squadList) {
+            int cY = Double.valueOf(SquadHelper.getMiddlePointOfSquad(s).getY()).intValue();
+            int cX = Double.valueOf(SquadHelper.getMiddlePointOfSquad(s).getX()).intValue();
+            double c = Math.sqrt((cX - X)*(cX - X) + (cY - Y)*(cY - Y));
+            if(closest > c) {
+                closest = c;
+                closestSquad = s;
+            }
+        }
+        return closestSquad;
     }
 }
