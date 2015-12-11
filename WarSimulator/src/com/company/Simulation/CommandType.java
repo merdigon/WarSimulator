@@ -9,4 +9,5 @@ public enum CommandType{
     BACK,
     HOLD_POSSITION,
     MERGE,
+    CHARGE,
 }
