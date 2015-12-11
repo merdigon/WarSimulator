@@ -7,5 +7,6 @@ public enum CommandType{
     MOVEMENT,
     ATTACK,
     BACK,
-    HOLD_POSSITION
+    HOLD_POSSITION,
+    MERGE,
 }

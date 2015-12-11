@@ -23,4 +23,14 @@ public class SquadHelper {
             return null;
         return new Coord(xSum/nr, ySum/nr);
     }
+
+    public static int getAverageHPofSquad(Squad squad){
+        int hp=0;
+        for(Soldier soldier : squad.getSoldiers()){
+            hp+=soldier.getHp();
+        }
+        if(squad.getSoldiers().size() == 0)
+            return 0;
+        return (hp/squad.getSoldiers().size());
+    }
 }
