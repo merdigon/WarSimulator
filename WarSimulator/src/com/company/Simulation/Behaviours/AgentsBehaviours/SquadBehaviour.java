@@ -78,6 +78,7 @@ public abstract class SquadBehaviour extends CyclicBehaviour {
     //je¿eli hold_possition, to nic nie robi
     protected void ifHoldPossition() {
         commForSoldiers = new Command(CommandType.HOLD_POSSITION);
+        commForSoldiers.setPossition(null);
     }
 
     //to samo co move, ale ¿o³nierz¹ przekazuje siê negatyw, czyli vector przeciwny

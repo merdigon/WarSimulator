@@ -17,6 +17,6 @@ public class ArcherySquadBehaviour extends SquadBehaviour {
     @Override
     protected void ifAttack() {
         commForSoldiers = new Command(CommandType.ATTACK);
-        commForSoldiers.setPossition(commFromCommander.getPossition());
+        commForSoldiers.setPossition(commFromCommander.getPossition().clone());
     }
 }

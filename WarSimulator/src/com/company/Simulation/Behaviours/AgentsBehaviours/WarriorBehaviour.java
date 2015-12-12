@@ -1,5 +1,6 @@
 package com.company.Simulation.Behaviours.AgentsBehaviours;
 
+import com.company.Helper.CoordHelper.Coord;
 import com.company.Simulation.Agents.Soldiers.Soldier;
 import com.company.Simulation.Agents.Soldiers.Warrior;
 
@@ -18,5 +19,11 @@ public class WarriorBehaviour extends SoldierBehaviour {
     @Override
     public Soldier getSoldier() {
         return warrior;
+    }
+
+    @Override
+    protected void attackFromCommand() {
+        Coord enemyCoord = getSoldier().getCommand().getPossition();
+        move((int)enemyCoord.getX(), (int)enemyCoord.getY());
     }
 }
