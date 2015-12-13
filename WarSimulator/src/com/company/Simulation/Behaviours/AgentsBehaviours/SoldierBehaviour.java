@@ -4,6 +4,8 @@ package com.company.Simulation.Behaviours.AgentsBehaviours;
  * Created by Szymon on 2015-10-31.
  */
 import com.company.Helper.CoordHelper.Coord;
+import com.company.Helper.CoordHelper.Vector2;
+import com.company.Helper.SquadHelper;
 import com.company.Simulation.Agents.Soldiers.Cavalry;
 import com.company.Simulation.Agents.Soldiers.Soldier;
 import com.company.Simulation.Agents.Squads.SquadType;
@@ -76,7 +78,7 @@ public abstract class SoldierBehaviour extends CyclicBehaviour {
     protected void countMoral(){
         int brave = getSoldier().getBrave();
         int hp = getSoldier().getHp();
-        double p2w = noticedFriends.size()/noticedEnemies.size();
+        double p2w = (noticedEnemies.size()==0 ? noticedFriends.size()+1 : (noticedFriends.size()+1)/noticedEnemies.size());
         boolean wound = getSoldier().getWasAttacked();
         double moral = getSoldier().getMoral();
 
@@ -96,7 +98,7 @@ public abstract class SoldierBehaviour extends CyclicBehaviour {
             if(moral<99)
                 moral+=0.2;
         }
-        else if(p2w>1.5){
+        else if(p2w>2){
             if(moral<99)
                 moral+=0.5;
         }
@@ -120,11 +122,21 @@ public abstract class SoldierBehaviour extends CyclicBehaviour {
     }
 
     protected void runToFriends(){
-
+        Coord friendsMid = SquadHelper.getMiddlePointOfSquad(getSoldier().getSquad());
+        move((int)friendsMid.getX(), (int)friendsMid.getY());
     }
 
     protected void runFromEnemies(){
-
+        if(noticedEnemies.size()>0) {
+            Coord friendsMid = SquadHelper.getMiddlePointOfSquad(noticedEnemies.get(0).getSquad());
+            Vector2 vec = getSoldier().getCoord().giveVectorToCoord(friendsMid);
+            vec.negative();
+            Coord coordtoMove = getSoldier().getCoord();
+            coordtoMove.applyVector(vec);
+            move((int)coordtoMove.getX(),(int)coordtoMove.getY());
+        }
+        else
+            runToFriends();
     }
 
     protected void additionalMovement(){}
@@ -221,6 +233,9 @@ public abstract class SoldierBehaviour extends CyclicBehaviour {
         }
         else if(getSoldier().getCommand() != null && getSoldier().getCommand().getCommType() == CommandType.ATTACK){
             attackFromCommand();
+        }
+        else if(getSoldier().getCommand() != null && getSoldier().getCommand().getCommType() == CommandType.MERGE){
+            runToFriends();
         }
     }
 

@@ -79,6 +79,8 @@ public abstract class Soldier extends Agent {
         return ifRunAway;
     }
 
+    public abstract void setSquad(Squad sq);
+
     public void setIfRunAway(){
         ifRunAway = true;
     }

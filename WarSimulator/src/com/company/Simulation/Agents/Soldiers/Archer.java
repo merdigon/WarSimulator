@@ -1,6 +1,8 @@
 package com.company.Simulation.Agents.Soldiers;
 
 import com.company.Simulation.Agents.Squads.ArcherSquad;
+import com.company.Simulation.Agents.Squads.CavalrySquad;
+import com.company.Simulation.Agents.Squads.Squad;
 import com.company.Simulation.Behaviours.AgentsBehaviours.ArcherBehaviour;
 
 /**
@@ -25,5 +27,11 @@ public class Archer extends Soldier {
     @Override
     public ArcherSquad getSquad() {
         return squad;
+    }
+
+
+    @Override
+    public void setSquad(Squad sq){
+        squad = (ArcherSquad)sq;
     }
 }

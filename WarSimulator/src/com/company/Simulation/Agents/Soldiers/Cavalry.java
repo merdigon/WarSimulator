@@ -1,6 +1,7 @@
 package com.company.Simulation.Agents.Soldiers;
 
 import com.company.Simulation.Agents.Squads.CavalrySquad;
+import com.company.Simulation.Agents.Squads.Squad;
 import com.company.Simulation.Behaviours.AgentsBehaviours.CavalryBehaviour;
 
 /**
@@ -63,5 +64,10 @@ public class Cavalry extends Soldier {
 
     public void setTimeAfterLastThinking(long time){
         timeAfterLastThinking=time;
+    }
+
+    @Override
+    public void setSquad(Squad sq){
+        squad = (CavalrySquad)sq;
     }
 }
