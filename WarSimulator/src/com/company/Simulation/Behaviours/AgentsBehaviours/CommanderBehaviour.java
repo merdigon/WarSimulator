@@ -64,7 +64,6 @@ public class CommanderBehaviour extends CyclicBehaviour {
                             Command archerHighestPos = new Command(CommandType.MOVEMENT);
                             archerHighestPos.setCoordToMove(highestPosCoord[0], highestPosCoord[1]);
                             s.setCommand(archerHighestPos);
-                            //continue;
                         }
                     }
                     ///// END OF HIGHEST POS FOR ARCHER
