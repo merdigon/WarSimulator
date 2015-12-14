@@ -1,6 +1,7 @@
 package com.company.Simulation.Behaviours.AgentsBehaviours;
 
 import com.company.Enviroment.PointOfTerrain;
+import com.company.Helper.CoordHelper.Coord;
 import com.company.Helper.SquadHelper;
 import com.company.Simulation.Agents.Commander;
 import com.company.Simulation.Agents.Soldiers.Soldier;
@@ -55,9 +56,6 @@ public class CommanderBehaviour extends CyclicBehaviour {
                     ///// END OF ARCHER MERGE
 
                     ///// move to the best (highest) position in range (10% of the map w and h)
-//                    if(s.getCommand().getCommType() == CommandType.MOVEMENT && SquadHelper.getMiddlePointOfSquad(s) != s.getCommand().getPossition()) {
-//                        continue;
-//                    }
                     if(!isEnemyNear(s)) {
                         int[] highestPosCoord = lookForHighestPos(s);
                         if(highestPosCoord != null) {
@@ -267,25 +265,25 @@ public class CommanderBehaviour extends CyclicBehaviour {
 
     private Squad cavalryChargeAt(Squad s) {
         List<Squad> returnSquad = new LinkedList<>();
-        int count_squad = 0;
+        //int count_squad = 0;
         Squad[] squads = comm.getBattle().getSquads();
         for (Squad enemySquad : squads) {
             if (enemySquad.getTeam() != s.getTeam() && enemySquad.squadType == SquadType.Warrior && enemySquad.checkIfAlive()) {
-                int temp = countSoldiersInSquad(enemySquad);
-                if (temp > count_squad) {
-                    count_squad = temp;
+                //int temp = countSoldiersInSquad(enemySquad);
+                //if (temp > count_squad) {
+                    //count_squad = temp;
                     returnSquad.add(enemySquad);
-                }
+                //}
             }
         }
         if (returnSquad.size() == 0) {
             for (Squad enemySquad : squads) {
                 if (enemySquad.getTeam() != s.getTeam() && enemySquad.checkIfAlive()) {
-                    int temp = countSoldiersInSquad(enemySquad);
-                    if (temp > count_squad) {
-                        count_squad = temp;
+                    //int temp = countSoldiersInSquad(enemySquad);
+                    //if (temp > count_squad) {
+                        //count_squad = temp;
                         returnSquad.add(enemySquad);
-                    }
+                    //}
                 }
             }
         }
