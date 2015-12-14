@@ -144,7 +144,9 @@ public abstract class SoldierBehaviour extends CyclicBehaviour {
     //checked
     protected boolean move(int xRelative, int yRelative){
         additionalMovement();
-
+        int oldRelX = xRelative;
+        int oldRelY = yRelative;
+/*
         if(Math.abs(getSoldier().getCoord().getX() - xRelative) <= 2) {
             xRelative = 0;
             yRelative = (int) ((yRelative - getSoldier().getCoord().getY()) / Math.abs(yRelative - getSoldier().getCoord().getY()));
@@ -153,10 +155,10 @@ public abstract class SoldierBehaviour extends CyclicBehaviour {
             xRelative = (int) ((xRelative - getSoldier().getCoord().getX()) / Math.abs(xRelative - getSoldier().getCoord().getX()));
             yRelative = 0;
         }
-        else {
+        else {*/
             xRelative = (int) ((xRelative - getSoldier().getCoord().getX()) / Math.abs(xRelative - getSoldier().getCoord().getX()));
             yRelative = (int) ((yRelative - getSoldier().getCoord().getY()) / Math.abs(yRelative - getSoldier().getCoord().getY()));
-        }
+        //}
 
         if(xRelative>1 || xRelative<-1 || yRelative<-1 || yRelative>1)
             xRelative++;
@@ -184,11 +186,23 @@ public abstract class SoldierBehaviour extends CyclicBehaviour {
                     }
                 }
             } else {
-                newYRelative = 0;
-                newXRelative = xRelative;
-                if (!getSoldier().getSquad().terrainMap.moveSoldier((int) soldCoord.getX(), (int) soldCoord.getY(), (int) soldCoord.getX() + newXRelative, (int) soldCoord.getY() + newYRelative)) {
+                if(Math.abs(oldRelX - soldCoord.getX())>Math.abs(oldRelY - soldCoord.getY())) {
+                    newYRelative = 0;
+                    newXRelative = xRelative;
+                }
+                else{
                     newXRelative = 0;
                     newYRelative = yRelative;
+                }
+                if (!getSoldier().getSquad().terrainMap.moveSoldier((int) soldCoord.getX(), (int) soldCoord.getY(), (int) soldCoord.getX() + newXRelative, (int) soldCoord.getY() + newYRelative)) {
+                    if(Math.abs(oldRelX - soldCoord.getX())>Math.abs(oldRelY - soldCoord.getY())) {
+                        newXRelative = 0;
+                        newYRelative = yRelative;
+                    }
+                    else{
+                        newYRelative = 0;
+                        newXRelative = xRelative;
+                    }
                     if (!getSoldier().getSquad().terrainMap.moveSoldier((int) soldCoord.getX(), (int) soldCoord.getY(), (int) soldCoord.getX() + newXRelative, (int) soldCoord.getY() + newYRelative)) {
                         return false;
                     }

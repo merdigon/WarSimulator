@@ -29,16 +29,31 @@ public abstract class SquadBehaviour extends CyclicBehaviour {
     @Override
     protected void action() {
         if(squad.getSoldiers().size()>0) {
-            commFromCommander = squad.getCommand();
-            if (commFromCommander == null)
-                return;
-            thinking();
-            giveCommand();
+            if(checkIfAlive()) {
+                commFromCommander = squad.getCommand();
+                if (commFromCommander == null)
+                    return;
+                thinking();
+                giveCommand();
+            }
         }
     }
 
     protected void thinking(){
         executeCommanderComm();
+    }
+
+    protected boolean checkIfAlive(){
+        if(squad.getIfAlive()) {
+            for (Soldier sold : squad.getSoldiers()) {
+                if (sold.getStatus())
+                    return true;
+            }
+            squad.setIfAlive(false);
+            return false;
+        }
+        else
+            return false;
     }
 
     protected void executeCommanderComm(){

@@ -22,6 +22,7 @@ public abstract class Squad extends Agent{
     public Teams team;
     public Map terrainMap;
     public SquadType squadType;
+    public boolean ifAlive = true;
 
     public Squad(Teams team, Map map, Battle battle, Commander commander){
         terrainMap = map;
@@ -74,6 +75,14 @@ public abstract class Squad extends Agent{
                 return;
             }
         }
+    }
+
+    public boolean getIfAlive(){
+        return ifAlive;
+    }
+
+    public void setIfAlive(boolean ifAlive){
+        this.ifAlive = ifAlive;
     }
 
     public ArrayList<Soldier> getSoldiers(){ return squadSoldiers; }
