@@ -64,11 +64,13 @@ public abstract class SoldierBehaviour extends CyclicBehaviour {
             if(getSoldier().getMoral()<(30 - getSoldier().getBrave()*3))
             {
                 runFromEnemies();
+                getSoldier().setMoral(getSoldier().getMoral()+2);
                 return true;
             }
             if(getSoldier().getMoral()<(50 - getSoldier().getBrave()*3))
             {
                 runToFriends();
+                getSoldier().setMoral(getSoldier().getMoral()+2);
                 return true;
             }
             return false;
@@ -89,7 +91,7 @@ public abstract class SoldierBehaviour extends CyclicBehaviour {
         if(wound){
             moral -= (30 - 5*brave);
         }
-
+/*
         if(p2w <= 1.5 && p2w > 1){
             if(moral<50)
                 moral+=0.2;
@@ -112,10 +114,10 @@ public abstract class SoldierBehaviour extends CyclicBehaviour {
                 moral -= 0.2;
             else if (brave == 3 && p2w <= 0.2)
                 moral -= 0.2;
-        }
+        }*/
 
         getSoldier().resetWasAttacked();
-
+        getSoldier().setMoral(moral);
         if(moral<15){
             getSoldier().setIfRunAway();
         }

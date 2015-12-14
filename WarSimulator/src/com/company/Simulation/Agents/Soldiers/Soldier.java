@@ -15,7 +15,7 @@ public abstract class Soldier extends Agent {
     protected Coord soldCoord;
     protected boolean isAlive = true;
     protected boolean wasAttacked = false;
-    protected int moral = 100;
+    protected double moral = 100;
     protected int brave;
     protected boolean ifRunAway = false;
 
@@ -59,11 +59,11 @@ public abstract class Soldier extends Agent {
 
     public void resetWasAttacked() { wasAttacked = false; }
 
-    public void setMoral(int moral){
+    public void setMoral(double moral){
         this.moral = moral;
     }
 
-    public int getMoral(){
+    public double getMoral(){
         return moral;
     }
 
