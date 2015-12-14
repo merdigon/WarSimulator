@@ -31,7 +31,7 @@ public class CavalryBehaviour extends SoldierBehaviour {
     @Override
     public void action(){
         if(!checkIfAlive()){
-            killSoldier();
+            getSoldier().killSoldier();
             return;
         }
         thinking();
