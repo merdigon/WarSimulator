@@ -3,6 +3,7 @@ package com.company.Simulation.Behaviours.AgentsBehaviours;
 import com.company.Enviroment.PointOfTerrain;
 import com.company.Helper.SquadHelper;
 import com.company.Simulation.Agents.Commander;
+import com.company.Simulation.Agents.Soldiers.Soldier;
 import com.company.Simulation.Agents.Squads.Squad;
 import com.company.Simulation.Agents.Squads.SquadType;
 import com.company.Simulation.Behaviours.BasicBahaviours.CyclicBehaviour;
@@ -102,15 +103,22 @@ public class CommanderBehaviour extends CyclicBehaviour {
                     ///// CAVALRY MERGE
                     int HPOfSquad = SquadHelper.getAverageHPofSquad(s);
                     if (HPOfSquad < 15 && HPOfSquad > 0) {
-                        Squad warriorMerge = regroup(s);
-                        if (warriorMerge != null) {
-                            Command warriorMergeCommand = new Command(CommandType.MERGE);
-                            warriorMergeCommand.setSquad(s);
-                            s.setCommand(warriorMergeCommand);
+                        Squad cavalryMerge = regroup(s);
+                        if (cavalryMerge != null) {
+                            Command cavalryMergeCommand = new Command(CommandType.MERGE);
+                            cavalryMergeCommand.setSquad(s);
+                            s.setCommand(cavalryMergeCommand);
                             continue;
                         }
                     }
-                    ///// END WARRIOR MERGE
+                    ///// END CAVALRY MERGE
+
+                    ///// CAVALRY CHARGE
+                    Squad squadToCharge = cavalryChargeAt(s);
+                    Command cavalryChargeCommand = new Command(CommandType.CHARGE);
+                    cavalryChargeCommand.setSquad(squadToCharge);
+                    s.setCommand(cavalryChargeCommand);
+                    ///// END OF CAVALRY CHARGE
                 }
             }
         }
@@ -181,7 +189,7 @@ public class CommanderBehaviour extends CyclicBehaviour {
     }
 
     private Squad regroup(Squad s) {
-        int[] range = startStopRange(s, 0.1, 0.1);
+        int[] range = startStopRange(s, 0.05, 0.05);
         Squad[] squads = comm.getBattle().getSquads();
         List<Squad> squadToMerge = new LinkedList<>();
         for (Squad alliedSquad : squads) {
@@ -227,6 +235,34 @@ public class CommanderBehaviour extends CyclicBehaviour {
                 Double.valueOf(SquadHelper.getMiddlePointOfSquad(s).getY()).intValue());
     }
 
+    private Squad cavalryChargeAt(Squad s) {
+        List<Squad> returnSquad = new LinkedList<>();
+        int count_squad = 0;
+        Squad[] squads = comm.getBattle().getSquads();
+        for(Squad enemySquad:squads) {
+            if(enemySquad.getTeam() != s.getTeam() && enemySquad.squadType == SquadType.Warrior) {
+                int temp = countSoldiersInSquad(enemySquad);
+                if (temp > count_squad) {
+                    count_squad = temp;
+                    returnSquad.add(enemySquad);
+                }
+            }
+        }
+        if(returnSquad.size() == 0) {
+            for(Squad enemySquad:squads) {
+                if(enemySquad.getTeam() != s.getTeam()) {
+                    int temp = countSoldiersInSquad(enemySquad);
+                    if (temp > count_squad) {
+                        count_squad = temp;
+                        returnSquad.add(enemySquad);
+                    }
+                }
+            }
+        }
+        return getFurthest(returnSquad, Double.valueOf(SquadHelper.getMiddlePointOfSquad(s).getX()).intValue(),
+                Double.valueOf(SquadHelper.getMiddlePointOfSquad(s).getY()).intValue());
+    }
+
     private Squad getClosest(List<Squad> squadList, int X, int Y) {
         if (squadList.size() == 0) {
             return null;
@@ -245,6 +281,24 @@ public class CommanderBehaviour extends CyclicBehaviour {
         return closestSquad;
     }
 
+    private Squad getFurthest(List<Squad> squadList, int X, int Y) {
+        if (squadList.size() == 0) {
+            return null;
+        }
+        Squad furthestSquad = null;
+        double furthest = 0;
+        for (Squad s : squadList) {
+            int cY = Double.valueOf(SquadHelper.getMiddlePointOfSquad(s).getY()).intValue();
+            int cX = Double.valueOf(SquadHelper.getMiddlePointOfSquad(s).getX()).intValue();
+            double c = Math.sqrt((cX - X) * (cX - X) + (cY - Y) * (cY - Y));
+            if (furthest < c) {
+                furthest = c;
+                furthestSquad = s;
+            }
+        }
+        return furthestSquad;
+    }
+
 
     private int[] startStopRange(Squad s, double xRange, double yRange) {
         int attackRangeX = Double.valueOf(comm.getMap().X * xRange).intValue();
@@ -260,7 +314,16 @@ public class CommanderBehaviour extends CyclicBehaviour {
         if (startRangeY < 0) {
             startRangeY = 0;
         }
-        int[] returnArray = {startRangeX, stopRangeX, startRangeY, stopRangeY};
-        return returnArray;
+        return new int[] {startRangeX, stopRangeX, startRangeY, stopRangeY};
+    }
+
+    private int countSoldiersInSquad(Squad s) {
+        int count = 0;
+        for(Soldier so:s.getSoldiers()) {
+            if(so.getHp() > 0) {
+                count ++;
+            }
+        }
+        return count;
     }
 }
