@@ -59,9 +59,12 @@ public class CommanderBehaviour extends CyclicBehaviour {
                     if (!isEnemyNear(s)) {
                         int[] highestPosCoord = lookForHighestPos(s);
                         if (highestPosCoord != null) {
-                            Command archerHighestPos = new Command(CommandType.MOVEMENT);
-                            archerHighestPos.setCoordToMove(highestPosCoord[0], highestPosCoord[1]);
-                            s.setCommand(archerHighestPos);
+                            if(!isInTheSamePos(highestPosCoord, s)) {
+                                Command archerHighestPos = new Command(CommandType.MOVEMENT);
+                                archerHighestPos.setCoordToMove(highestPosCoord[0], highestPosCoord[1]);
+                                s.setCommand(archerHighestPos);
+                                continue;
+                            }
                         }
                     }
                     ///// END OF HIGHEST POS FOR ARCHER
@@ -358,5 +361,10 @@ public class CommanderBehaviour extends CyclicBehaviour {
             }
         }
         return count;
+    }
+
+    private boolean isInTheSamePos(int [] coords, Squad s) {
+        return coords[1] - 3 >= SquadHelper.getMiddlePointOfSquad(s).getX() && coords[1] + 3 <= SquadHelper.getMiddlePointOfSquad(s).getX()
+                && coords[2] - 3 >= SquadHelper.getMiddlePointOfSquad(s).getY() && coords[2] + 3 <= SquadHelper.getMiddlePointOfSquad(s).getY();
     }
 }
