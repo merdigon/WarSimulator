@@ -33,7 +33,7 @@ public class Map {
 
     public synchronized boolean moveSoldier(int x1, int y1, int x2, int y2)
     {
-        if(x2 >= X || x1 >= X || y1 >= Y || y2 >= Y)
+        if(x2 >= X || x1 >= X || y1 >= Y || y2 >= Y || x2 < 0 ||  x1 < 0 || y1 < 0 || y2 < 0)
             return false;
 
         if(Terrain[x2][y2].getSoldier()!=null)

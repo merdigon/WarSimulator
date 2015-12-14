@@ -57,6 +57,14 @@ public class Battle {
 
     public void lifeCycle() {
         lastCycle = System.nanoTime();
+
+        for (Commander comm : commanders) {
+            comm.executeBehaviours();
+        }
+
+        for (Squad squad : squads)
+            squad.executeBehaviours();
+
         if (((System.nanoTime() - lastSoldiersCycle) / 1000000) > 1000) {
             lastSoldiersCycle = System.nanoTime();
 
@@ -67,14 +75,7 @@ public class Battle {
                         sold.executeBehaviours();
                 }
             }
-        }
-
-        gui.changeGrid(squads[0].terrainMap);
-        for (Squad squad : squads)
-            squad.executeBehaviours();
-
-        for (Commander comm : commanders) {
-            comm.executeBehaviours();
+            gui.changeGrid(squads[0].terrainMap);
         }
 
         for (Squad squad : squads) {

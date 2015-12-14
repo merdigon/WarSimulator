@@ -149,12 +149,14 @@ public abstract class SoldierBehaviour extends CyclicBehaviour {
             xRelative = 0;
             yRelative = (int) ((yRelative - getSoldier().getCoord().getY()) / Math.abs(yRelative - getSoldier().getCoord().getY()));
         }
-        if(Math.abs(getSoldier().getCoord().getY()-yRelative) <= 2) {
+        else if(Math.abs(getSoldier().getCoord().getY()-yRelative) <= 2) {
             xRelative = (int) ((xRelative - getSoldier().getCoord().getX()) / Math.abs(xRelative - getSoldier().getCoord().getX()));
             yRelative = 0;
         }
-        xRelative = (int)((xRelative - getSoldier().getCoord().getX())/Math.abs(xRelative - getSoldier().getCoord().getX()));
-        yRelative = (int)((yRelative - getSoldier().getCoord().getY())/Math.abs(yRelative - getSoldier().getCoord().getY()));
+        else {
+            xRelative = (int) ((xRelative - getSoldier().getCoord().getX()) / Math.abs(xRelative - getSoldier().getCoord().getX()));
+            yRelative = (int) ((yRelative - getSoldier().getCoord().getY()) / Math.abs(yRelative - getSoldier().getCoord().getY()));
+        }
 
         if(xRelative>1 || xRelative<-1 || yRelative<-1 || yRelative>1)
             xRelative++;
