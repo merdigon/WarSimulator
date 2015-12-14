@@ -56,9 +56,9 @@ public class CommanderBehaviour extends CyclicBehaviour {
                     ///// END OF ARCHER MERGE
 
                     ///// move to the best (highest) position in range (10% of the map w and h)
-                    if(!isEnemyNear(s)) {
+                    if (!isEnemyNear(s)) {
                         int[] highestPosCoord = lookForHighestPos(s);
-                        if(highestPosCoord != null) {
+                        if (highestPosCoord != null) {
                             Command archerHighestPos = new Command(CommandType.MOVEMENT);
                             archerHighestPos.setCoordToMove(highestPosCoord[0], highestPosCoord[1]);
                             s.setCommand(archerHighestPos);
@@ -158,7 +158,7 @@ public class CommanderBehaviour extends CyclicBehaviour {
                 }
             }
         }
-        if(highestPosCoord[0] == 99999999 && highestPosCoord[1] == 99999999)
+        if (highestPosCoord[0] == 99999999 && highestPosCoord[1] == 99999999)
             return null;
         return highestPosCoord;
     }
@@ -183,7 +183,7 @@ public class CommanderBehaviour extends CyclicBehaviour {
                 Double.valueOf(SquadHelper.getMiddlePointOfSquad(s).getY()).intValue());
     }
 
-    private boolean isEnemyNear(Squad s){
+    private boolean isEnemyNear(Squad s) {
         int[] range = startStopRange(s, 0.3, 0.3);
         Squad[] squads = comm.getBattle().getSquads();
         for (Squad enemySquad : squads) {
@@ -269,22 +269,23 @@ public class CommanderBehaviour extends CyclicBehaviour {
         //int count_squad = 0;
         Squad[] squads = comm.getBattle().getSquads();
         for (Squad enemySquad : squads) {
-            if (enemySquad.getTeam() != s.getTeam() && enemySquad.squadType == SquadType.Warrior && enemySquad.checkIfAlive()) {
-                //int temp = countSoldiersInSquad(enemySquad);
-                //if (temp > count_squad) {
-                    //count_squad = temp;
+            if (enemySquad.getTeam() != s.getTeam() && enemySquad.squadType == SquadType.Warrior
+                    && enemySquad.getCommand().getCommType() == CommandType.ATTACK &&
+                    enemySquad.getCommand().getSquad().squadType == SquadType.Warrior && enemySquad.checkIfAlive()) {
+                returnSquad.add(enemySquad);
+            }
+        }
+        if (returnSquad.size() == 0) {
+            for (Squad enemySquad : squads) {
+                if (enemySquad.getTeam() != s.getTeam() && enemySquad.squadType == SquadType.Warrior && enemySquad.checkIfAlive()) {
                     returnSquad.add(enemySquad);
-                //}
+                }
             }
         }
         if (returnSquad.size() == 0) {
             for (Squad enemySquad : squads) {
                 if (enemySquad.getTeam() != s.getTeam() && enemySquad.checkIfAlive()) {
-                    //int temp = countSoldiersInSquad(enemySquad);
-                    //if (temp > count_squad) {
-                        //count_squad = temp;
-                        returnSquad.add(enemySquad);
-                    //}
+                    returnSquad.add(enemySquad);
                 }
             }
         }
