@@ -236,19 +236,21 @@ public class CommanderBehaviour extends CyclicBehaviour {
     }
 
     private boolean warriorCalvaryCharge(Squad s) {
-        int[] range = startStopRange(s, 0.2, 0.2);
         Squad[] squads = comm.getBattle().getSquads();
         for (Squad enemySquad : squads) {
-            double enemyX = SquadHelper.getMiddlePointOfSquad(enemySquad).getX();
-            double enemyY = SquadHelper.getMiddlePointOfSquad(enemySquad).getY();
-            if (enemyX - range[0] >= 0 && enemyX - range[1] <= 0 && enemyY - range[2] >= 0 && enemyY - range[3] <= 0) {
-                try {
-                    if (enemySquad.getTeam() != s.getTeam() && enemySquad.checkIfAlive() && enemySquad.squadType == SquadType.Cavalry &&
-                            enemySquad.getCommand().getCommType() == CommandType.CHARGE && enemySquad.getCommand().getSquad() == s) {
-                        return true;
+            if(enemySquad.getTeam() != s.getTeam() && enemySquad.checkIfAlive()) {
+                double enemyX = SquadHelper.getMiddlePointOfSquad(enemySquad).getX();
+                double enemyY = SquadHelper.getMiddlePointOfSquad(enemySquad).getY();
+                int[] range = startStopRange(s, 0.2, 0.2);
+                if (enemyX - range[0] >= 0 && enemyX - range[1] <= 0 && enemyY - range[2] >= 0 && enemyY - range[3] <= 0) {
+                    try {
+                        if (enemySquad.squadType == SquadType.Cavalry &&
+                                enemySquad.getCommand().getCommType() == CommandType.CHARGE && enemySquad.getCommand().getSquad() == s) {
+                            return true;
+                        }
+                    } catch (NullPointerException e) {
+                        continue;
                     }
-                } catch (NullPointerException e) {
-                    continue;
                 }
             }
         }

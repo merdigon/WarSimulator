@@ -1,5 +1,6 @@
 package com.company.Simulation.Behaviours.AgentsBehaviours;
 
+import com.company.Helper.CoordHelper.Coord;
 import com.company.Helper.SquadHelper;
 import com.company.Simulation.Agents.Commander;
 import com.company.Simulation.Agents.Squads.ArcherSquad;
@@ -19,7 +20,9 @@ public class ArcherySquadBehaviour extends SquadBehaviour {
     protected void ifAttack() {
         commForSoldiers = new Command(CommandType.ATTACK);
         if(commFromCommander.getPossition() == null) {
-            commForSoldiers.setPossition(SquadHelper.getMiddlePointOfSquad(commFromCommander.getSquad()));
+            Coord pos = SquadHelper.getMiddlePointOfSquad(commFromCommander.getSquad());
+            if(pos != null)
+                commForSoldiers.setPossition(pos);
         }
     }
 }
