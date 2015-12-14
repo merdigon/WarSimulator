@@ -41,9 +41,10 @@ public class AttackBehaviour extends OneShotBehaviour {
         else if (percentHeight<-0.4)
             addPoint=-3;
 
-        //super trudny algorytm obliczaj¹cy szanse na trafienie na podstawie wysokoœci
+        //super trudny algorytm obliczaj¹cy szanse na trafienie na podstawie wysokoœci, ranienie go oraz ustawianie tego, ¿e zosta³ zaatakowany
         if((generator.nextDouble()*10)>(4-addPoint)) {
             defender.changeHp(40);
+            defender.setWasAttacked();
         }
     }
 }

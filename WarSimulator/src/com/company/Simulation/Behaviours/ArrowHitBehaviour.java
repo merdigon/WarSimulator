@@ -27,7 +27,8 @@ public class ArrowHitBehaviour extends OneShotBehaviour {
 
         //W sumie ju¿ jest dodane, nie ma co rozszerzaæ
         Random gen = new Random();
-        if(gen.nextDouble()*10>4)
+        if(gen.nextDouble()*10>4) {
             hitSoldier.changeHp(30);
+        }
     }
 }

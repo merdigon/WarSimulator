@@ -14,6 +14,10 @@ public abstract class Soldier extends Agent {
     protected Command comm;
     protected Coord soldCoord;
     protected boolean isAlive = true;
+    protected boolean wasAttacked = false;
+    protected int moral = 100;
+    protected int brave;
+    protected boolean ifRunAway = false;
 
     public Soldier(){
         setup();
@@ -48,4 +52,36 @@ public abstract class Soldier extends Agent {
     public boolean getStatus() { return isAlive; }
 
     public void setStatus(boolean bool) { isAlive = bool; }
+
+    public boolean getWasAttacked() { return wasAttacked; }
+
+    public void setWasAttacked() { wasAttacked = true; }
+
+    public void resetWasAttacked() { wasAttacked = false; }
+
+    public void setMoral(int moral){
+        this.moral = moral;
+    }
+
+    public int getMoral(){
+        return moral;
+    }
+
+    public void setBrave(int brave){
+        this.brave = brave;
+    }
+
+    public int getBrave(){
+        return brave;
+    }
+
+    public boolean getIfRunAway(){
+        return ifRunAway;
+    }
+
+    public abstract void setSquad(Squad sq);
+
+    public void setIfRunAway(){
+        ifRunAway = true;
+    }
 }

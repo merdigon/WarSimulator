@@ -28,11 +28,13 @@ public abstract class SquadBehaviour extends CyclicBehaviour {
 
     @Override
     protected void action() {
-        commFromCommander = squad.getCommand();
-        if(commFromCommander==null)
-            return;
-        thinking();
-        giveCommand();
+        if(squad.getSoldiers().size()>0) {
+            commFromCommander = squad.getCommand();
+            if (commFromCommander == null)
+                return;
+            thinking();
+            giveCommand();
+        }
     }
 
     protected void thinking(){
@@ -45,6 +47,8 @@ public abstract class SquadBehaviour extends CyclicBehaviour {
             case MOVEMENT: ifMovement();    break;
             case HOLD_POSSITION: ifHoldPossition(); break;
             case BACK:  ifBack();   break;
+            case MERGE: ifMerge();  break;
+            case CHARGE: ifCharge(); break;
         }
     }
 
@@ -78,6 +82,7 @@ public abstract class SquadBehaviour extends CyclicBehaviour {
     //je¿eli hold_possition, to nic nie robi
     protected void ifHoldPossition() {
         commForSoldiers = new Command(CommandType.HOLD_POSSITION);
+        commForSoldiers.setPossition(null);
     }
 
     //to samo co move, ale ¿o³nierz¹ przekazuje siê negatyw, czyli vector przeciwny
@@ -90,6 +95,23 @@ public abstract class SquadBehaviour extends CyclicBehaviour {
 
         commForSoldiers = new Command(CommandType.BACK);
         vectorToMove = v2;
+    }
+
+    protected void ifMerge(){
+        Squad squadAimToMerge = commFromCommander.getSquad();
+
+        for(Soldier sold : squad.getSoldiers()){
+            commForSoldiers = new Command(CommandType.MERGE);
+            sold.setCommand(commForSoldiers);
+            sold.setSquad(squad);
+            squadAimToMerge.getSoldiers().add(sold);
+        }
+
+        squad.getSoldiers().clear();
+    }
+
+    protected void ifCharge(){
+        ifAttack();
     }
 
     //atak jest ró¿ny dla ka¿dego squadu

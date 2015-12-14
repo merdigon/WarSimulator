@@ -1,5 +1,6 @@
 package com.company.Simulation.Agents.Soldiers;
 
+import com.company.Simulation.Agents.Squads.Squad;
 import com.company.Simulation.Agents.Squads.WarriorSquad;
 import com.company.Simulation.Behaviours.AgentsBehaviours.WarriorBehaviour;
 
@@ -24,5 +25,10 @@ public class Warrior extends Soldier {
     @Override
     protected void setup() {
         addBehaviour(new WarriorBehaviour(this));
+    }
+
+    @Override
+    public void setSquad(Squad sq){
+        squad = (WarriorSquad)sq;
     }
 }
