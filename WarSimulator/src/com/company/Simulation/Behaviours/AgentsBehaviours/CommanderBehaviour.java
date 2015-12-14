@@ -56,10 +56,10 @@ public class CommanderBehaviour extends CyclicBehaviour {
                     ///// END OF ARCHER MERGE
 
                     ///// move to the best (highest) position in range (10% of the map w and h)
-                    if (!isEnemyNear(s)) {
+                    if (!isEnemyNear(s, 0.3, 0.3)) {
                         int[] highestPosCoord = lookForHighestPos(s);
                         if (highestPosCoord != null) {
-                            if(!isInTheSamePos(highestPosCoord, s)) {
+                            if (!isInTheSamePos(highestPosCoord, s)) {
                                 Command archerHighestPos = new Command(CommandType.MOVEMENT);
                                 archerHighestPos.setCoordToMove(highestPosCoord[0], highestPosCoord[1]);
                                 s.setCommand(archerHighestPos);
@@ -185,8 +185,8 @@ public class CommanderBehaviour extends CyclicBehaviour {
                 Double.valueOf(SquadHelper.getMiddlePointOfSquad(s).getY()).intValue());
     }
 
-    private boolean isEnemyNear(Squad s) {
-        int[] range = startStopRange(s, 0.3, 0.3);
+    private boolean isEnemyNear(Squad s, double x, double y) {
+        int[] range = startStopRange(s, x, y);
         Squad[] squads = comm.getBattle().getSquads();
         for (Squad enemySquad : squads) {
             if (enemySquad.getTeam() != s.getTeam() && enemySquad.checkIfAlive()) {
@@ -235,13 +235,16 @@ public class CommanderBehaviour extends CyclicBehaviour {
                 Double.valueOf(SquadHelper.getMiddlePointOfSquad(s).getY()).intValue());
     }
 
-    private boolean warriorCalvaryCharge(Squad s) {//TODO: enter if condition: when unit is fighting, do not hold position
+    private boolean warriorCalvaryCharge(Squad s) {
         Squad[] squads = comm.getBattle().getSquads();
         for (Squad enemySquad : squads) {
-            if (enemySquad.getTeam() != s.getTeam() && enemySquad.squadType == SquadType.Cavalry &&
-                    enemySquad.getCommand().getCommType() == CommandType.CHARGE && enemySquad.getCommand().getSquad() == s
-                    && enemySquad.checkIfAlive()) {
-                return true;
+            try {
+                if (enemySquad.getTeam() != s.getTeam() && enemySquad.checkIfAlive() && enemySquad.squadType == SquadType.Cavalry &&
+                        enemySquad.getCommand().getCommType() == CommandType.CHARGE && enemySquad.getCommand().getSquad() == s) {
+                    return true;
+                }
+            } catch (NullPointerException e){
+                continue;
             }
         }
         return false;
