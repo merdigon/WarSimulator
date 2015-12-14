@@ -42,9 +42,11 @@ public abstract class SoldierBehaviour extends CyclicBehaviour {
     protected void thinking(){
         if(getSoldier().getIfRunAway())
             runAway();
-        lookForAgents();
-        if(!executeInstincts()) {
-            listenCommand();
+        else {
+            lookForAgents();
+            if (!executeInstincts()) {
+                listenCommand();
+            }
         }
     }
 
@@ -66,13 +68,13 @@ public abstract class SoldierBehaviour extends CyclicBehaviour {
                 runFromEnemies();
                 getSoldier().setMoral(getSoldier().getMoral()+2);
                 return true;
-            }
+            }/*
             if(getSoldier().getMoral()<(50 - getSoldier().getBrave()*3))
             {
                 runToFriends();
                 getSoldier().setMoral(getSoldier().getMoral()+2);
                 return true;
-            }
+            }*/
             return false;
         }
     }
@@ -296,6 +298,10 @@ public abstract class SoldierBehaviour extends CyclicBehaviour {
     }
 
     protected void runAway(){
-
+        Coord coordToRunAway = getSoldier().getCoord().clone();
+        coordToRunAway.applyVector(new Vector2(-1,0));
+        if(coordToRunAway.getX()<=0)
+            killSoldier();
+        move((int)coordToRunAway.getX(),(int)coordToRunAway.getY());
     }
 }

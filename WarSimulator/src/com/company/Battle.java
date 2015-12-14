@@ -64,8 +64,11 @@ public class Battle {
             comm.executeBehaviours();
         }
 
-        for (Squad squad : squads)
+        for (Squad squad : squads) {
             squad.executeBehaviours();
+            if(squad.squadType == SquadType.Archer)
+                ((ArcherSquad)squad).executePhysic();
+        }
 
         if (((System.nanoTime() - lastSoldiersCycle) / 1000000) > 1000) {
             lastSoldiersCycle = System.nanoTime();
