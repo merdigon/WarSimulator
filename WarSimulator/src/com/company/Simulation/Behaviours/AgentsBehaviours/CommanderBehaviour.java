@@ -9,7 +9,9 @@ import com.company.Simulation.Agents.Squads.SquadType;
 import com.company.Simulation.Behaviours.BasicBahaviours.CyclicBehaviour;
 import com.company.Simulation.Command;
 import com.company.Simulation.CommandType;
+import com.company.Simulation.Teams;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -30,13 +32,13 @@ public class CommanderBehaviour extends CyclicBehaviour {
                 if (s.squadType == SquadType.Archer) {
 
                     ///// ARCHER RUN AWAY FROM ENEMY (10% of map w and h)
-//                    Squad runFrom = archerRunAwayFromEnemy(s);
-//                    if (runFrom != null) {
-//                        Command archerRunAway = new Command(CommandType.BACK);
-//                        archerRunAway.setSquad(runFrom);
-//                        s.setCommand(archerRunAway);
-//                        continue;
-//                    }
+                    Squad runFrom = archerRunAwayFromEnemy(s);
+                    if (runFrom != null) {
+                        Command archerRunAway = new Command(CommandType.BACK);
+                        archerRunAway.setSquad(runFrom);
+                        s.setCommand(archerRunAway);
+                        continue;
+                    }
                     ///// END OF ARCHER RUN AWAY FROM ENEMY
 
                     ///// ARCHER MERGE
@@ -52,6 +54,20 @@ public class CommanderBehaviour extends CyclicBehaviour {
                     }
                     ///// END OF ARCHER MERGE
 
+                    ///// move to the best (highest) position in range (10% of the map w and h)
+//                    if(s.getCommand().getCommType() == CommandType.MOVEMENT && SquadHelper.getMiddlePointOfSquad(s) != s.getCommand().getPossition()) {
+//                        continue;
+//                    }
+                    if(!isEnemyNear(s)) {
+                        int[] highestPosCoord = lookForHighestPos(s);
+                        if(highestPosCoord != null) {
+                            Command archerHighestPos = new Command(CommandType.MOVEMENT);
+                            archerHighestPos.setCoordToMove(highestPosCoord[0], highestPosCoord[1]);
+                            s.setCommand(archerHighestPos);
+                            //continue;
+                        }
+                    }
+                    ///// END OF HIGHEST POS FOR ARCHER
 
                     ///// ARCHER ATTACK (50% of map w and h), when detected calvary charging -> focus fire on it
                     Squad toAttack = archerAttack(s);
@@ -63,15 +79,7 @@ public class CommanderBehaviour extends CyclicBehaviour {
                     }
                     ///// END OF ARCHER ATTACK
 
-                    ///// move to the best (highest) position in range (10% of the map w and h)
-//                    if(s.getCommand().getCommType() == CommandType.MOVEMENT && SquadHelper.getMiddlePointOfSquad(s) != s.getCommand().getPossition()) {
-//                        continue;
-//                    }
-                    int[] highestPosCoord = lookForHighestPos(s);
-                    Command archerHighestPos = new Command(CommandType.MOVEMENT);
-                    archerHighestPos.setCoordToMove(highestPosCoord[0], highestPosCoord[1]);
-                    s.setCommand(archerHighestPos);
-                    ///// END OF HIGHEST POS FOR ARCHER
+
                 } else if (s.squadType == SquadType.Warrior) {
                     ///// WHEN CALVARY CHARGES
                     if (warriorCalvaryCharge(s)) {
@@ -129,8 +137,8 @@ public class CommanderBehaviour extends CyclicBehaviour {
     }
 
     private int[] lookForHighestPos(Squad s) {
-        double highestPos = 0;
-        int[] highestPosCoord = new int[2];
+        double highestPos = 99999999;
+        int[] highestPosCoord = {99999999, 99999999};
 
         int[] range = startStopRange(s, 0.1, 0.1);
         for (int i = range[0]; i < range[1]; i++) {
@@ -142,7 +150,7 @@ public class CommanderBehaviour extends CyclicBehaviour {
             for (int j = range[2]; j < range[3]; j++) {
                 try {
                     double height = comm.getMap().Terrain[i][j].getHeight();
-                    if (highestPos < height) {
+                    if (highestPos > height) {
                         highestPos = height;
                         highestPosCoord[0] = i;
                         highestPosCoord[1] = j;
@@ -152,7 +160,8 @@ public class CommanderBehaviour extends CyclicBehaviour {
                 }
             }
         }
-        System.out.println(highestPos);
+        if(highestPosCoord[0] == 99999999 && highestPosCoord[1] == 99999999)
+            return null;
         return highestPosCoord;
     }
 
@@ -174,6 +183,21 @@ public class CommanderBehaviour extends CyclicBehaviour {
         }
         return getClosest(squadToAttack, Double.valueOf(SquadHelper.getMiddlePointOfSquad(s).getX()).intValue(),
                 Double.valueOf(SquadHelper.getMiddlePointOfSquad(s).getY()).intValue());
+    }
+
+    private boolean isEnemyNear(Squad s){
+        int[] range = startStopRange(s, 0.3, 0.3);
+        Squad[] squads = comm.getBattle().getSquads();
+        for (Squad enemySquad : squads) {
+            if (enemySquad.getTeam() != s.getTeam() && enemySquad.checkIfAlive()) {
+                double enemyX = SquadHelper.getMiddlePointOfSquad(enemySquad).getX();
+                double enemyY = SquadHelper.getMiddlePointOfSquad(enemySquad).getY();
+                if (enemyX - range[0] >= 0 && enemyX - range[1] <= 0 && enemyY - range[2] >= 0 && enemyY - range[3] <= 0) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     private Squad archerRunAwayFromEnemy(Squad s) {
