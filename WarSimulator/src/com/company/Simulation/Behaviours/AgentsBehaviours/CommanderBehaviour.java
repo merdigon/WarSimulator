@@ -364,7 +364,7 @@ public class CommanderBehaviour extends CyclicBehaviour {
     }
 
     private boolean isInTheSamePos(int [] coords, Squad s) {
-        return coords[1] - 3 >= SquadHelper.getMiddlePointOfSquad(s).getX() && coords[1] + 3 <= SquadHelper.getMiddlePointOfSquad(s).getX()
-                && coords[2] - 3 >= SquadHelper.getMiddlePointOfSquad(s).getY() && coords[2] + 3 <= SquadHelper.getMiddlePointOfSquad(s).getY();
+        return coords[0] - 3 <= SquadHelper.getMiddlePointOfSquad(s).getX() && coords[0] + 3 >= SquadHelper.getMiddlePointOfSquad(s).getX()
+                && coords[1] - 3 <= SquadHelper.getMiddlePointOfSquad(s).getY() && coords[1] + 3 >= SquadHelper.getMiddlePointOfSquad(s).getY();
     }
 }

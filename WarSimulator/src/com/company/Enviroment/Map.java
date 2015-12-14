@@ -2,7 +2,9 @@ package com.company.Enviroment;
 
 
 import com.company.Helper.CoordHelper.Coord;
+import com.company.Simulation.Agents.Soldiers.Cavalry;
 import com.company.Simulation.Agents.Soldiers.Soldier;
+import com.company.Simulation.Agents.Squads.SquadType;
 
 /**
  * Created by Szymon on 2015-10-16.
@@ -36,11 +38,31 @@ public class Map {
         if(x2 >= X || x1 >= X || y1 >= Y || y2 >= Y || x2 < 0 ||  x1 < 0 || y1 < 0 || y2 < 0)
             return false;
 
-        if(Terrain[x2][y2].getSoldier()!=null)
-            return false;
-
         if(Terrain[x1][y1].getSoldier() == null)
             return false;
+
+        if(Terrain[x2][y2].getSoldier()!=null){
+            if(Terrain[x1][y1].getSoldier().getSquad().squadType == SquadType.Cavalry){
+                Cavalry cav = (Cavalry)Terrain[x1][y1].getSoldier();
+                Soldier aim = Terrain[x2][y2].getSoldier();
+                if(aim.getSquad().getTeam() != cav.getSquad().getTeam()){
+                    if(cav.getVelocity()<400){
+                        double hpToTake = 60/275 * (cav.getVelocity() - 125);
+                        if(aim.getHp()<hpToTake){
+                            cav.setVelocity(aim.getHp() * 275/60);
+                            aim.killSoldier();
+                            changeSoldierPoss(x1, y1, x2, y2);
+                            return true;
+                        }
+                        else{
+                            aim.changeHp((int)hpToTake);
+                            cav.setVelocity(500);
+                        }
+                    }
+                }
+            }
+            return false;
+        }
 
         changeSoldierPoss(x1, y1, x2, y2);
 

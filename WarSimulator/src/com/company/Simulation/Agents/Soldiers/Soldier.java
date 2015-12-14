@@ -84,4 +84,9 @@ public abstract class Soldier extends Agent {
     public void setIfRunAway(){
         ifRunAway = true;
     }
+
+    public void killSoldier(){
+        getSquad().terrainMap.clearPosition((int) getCoord().getX(), (int) getCoord().getY());
+        getSquad().eliminateSoldier(this);
+    }
 }

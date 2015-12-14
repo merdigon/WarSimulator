@@ -31,7 +31,7 @@ public abstract class SoldierBehaviour extends CyclicBehaviour {
     @Override
     public void action() {
         if(!checkIfAlive()){
-            killSoldier();
+            getSoldier().killSoldier();
             return;
         }
         getSoldier().getCommand().setWasListened(true);
@@ -293,16 +293,13 @@ public abstract class SoldierBehaviour extends CyclicBehaviour {
     }*/
 
     //checked
-    protected void killSoldier(){
-        getSoldier().getSquad().terrainMap.clearPosition((int) getSoldier().getCoord().getX(), (int) getSoldier().getCoord().getY());
-        getSoldier().getSquad().eliminateSoldier(getSoldier());
-    }
+
 
     protected void runAway(){
         Coord coordToRunAway = getSoldier().getCoord().clone();
         coordToRunAway.applyVector(new Vector2(-1,0));
         if(coordToRunAway.getX()<=0)
-            killSoldier();
+            getSoldier().killSoldier();
         move((int)coordToRunAway.getX(),(int)coordToRunAway.getY());
     }
 }
