@@ -262,6 +262,8 @@ public abstract class SoldierBehaviour extends CyclicBehaviour {
 
     //checked
     protected boolean checkAndAttack(){
+        if(getSoldier().getSquad().squadType == SquadType.Cavalry && ((Cavalry)getSoldier()).getVelocity()<400)
+            return false;
         for(Soldier soldEnemy : noticedEnemies){
             if(Math.abs(getSoldier().getCoord().getX() - soldEnemy.getCoord().getX()) <= 1 && Math.abs(getSoldier().getCoord().getY() - soldEnemy.getCoord().getY()) <= 1){
                 attack(soldEnemy);

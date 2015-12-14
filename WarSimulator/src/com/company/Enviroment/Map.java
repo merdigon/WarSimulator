@@ -45,18 +45,19 @@ public class Map {
             if(Terrain[x1][y1].getSoldier().getSquad().squadType == SquadType.Cavalry){
                 Cavalry cav = (Cavalry)Terrain[x1][y1].getSoldier();
                 Soldier aim = Terrain[x2][y2].getSoldier();
-                if(aim.getSquad().getTeam() != cav.getSquad().getTeam()){
-                    if(cav.getVelocity()<400){
-                        double hpToTake = 60/275 * (cav.getVelocity() - 125);
-                        if(aim.getHp()<hpToTake){
-                            cav.setVelocity(aim.getHp() * 275/60);
-                            aim.killSoldier();
-                            changeSoldierPoss(x1, y1, x2, y2);
-                            return true;
-                        }
-                        else{
-                            aim.changeHp((int)hpToTake);
-                            cav.setVelocity(500);
+                if(aim.getSquad().squadType != SquadType.Cavalry) {
+                    if (aim.getSquad().getTeam() != cav.getSquad().getTeam()) {
+                        if (cav.getVelocity() < 400) {
+                            double hpToTake = (60 * (400 - cav.getVelocity())) / 275;
+                            if (aim.getHp() < hpToTake) {
+                                cav.setVelocity((aim.getHp() * 275) / 60);
+                                aim.killSoldier();
+                                changeSoldierPoss(x1, y1, x2, y2);
+                                return true;
+                            } else {
+                                aim.changeHp((int) hpToTake);
+                                cav.setVelocity(500);
+                            }
                         }
                     }
                 }
