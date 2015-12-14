@@ -25,18 +25,18 @@ public class CommanderBehaviour extends CyclicBehaviour {
     protected void action() {
         Squad[] squads = comm.getBattle().getSquads();
         for (Squad s : squads) {
-            if (s.getTeam() == comm.getTeam()) {
+            if (s.getTeam() == comm.getTeam() && s.ifAlive) {
 
                 if (s.squadType == SquadType.Archer) {
 
                     ///// ARCHER RUN AWAY FROM ENEMY (10% of map w and h)
-                    Squad runFrom = archerRunAwayFromEnemy(s);
-                    if (runFrom != null) {
-                        Command archerRunAway = new Command(CommandType.BACK);
-                        archerRunAway.setSquad(runFrom);
-                        s.setCommand(archerRunAway);
-                        continue;
-                    }
+//                    Squad runFrom = archerRunAwayFromEnemy(s);
+//                    if (runFrom != null) {
+//                        Command archerRunAway = new Command(CommandType.BACK);
+//                        archerRunAway.setSquad(runFrom);
+//                        s.setCommand(archerRunAway);
+//                        continue;
+//                    }
                     ///// END OF ARCHER RUN AWAY FROM ENEMY
 
                     ///// ARCHER MERGE
@@ -52,12 +52,6 @@ public class CommanderBehaviour extends CyclicBehaviour {
                     }
                     ///// END OF ARCHER MERGE
 
-                    ///// move to the best (highest) position in range (10% of the map w and h)
-                    int[] highestPosCoord = lookForHighestPos(s);
-                    Command archerHighestPos = new Command(CommandType.MOVEMENT);
-                    archerHighestPos.setCoordToMove(highestPosCoord[0], highestPosCoord[1]);
-                    s.setCommand(archerHighestPos);
-                    ///// END OF HIGHEST POS FOR ARCHER
 
                     ///// ARCHER ATTACK (50% of map w and h), when detected calvary charging -> focus fire on it
                     Squad toAttack = archerAttack(s);
@@ -68,6 +62,16 @@ public class CommanderBehaviour extends CyclicBehaviour {
                         continue;
                     }
                     ///// END OF ARCHER ATTACK
+
+                    ///// move to the best (highest) position in range (10% of the map w and h)
+//                    if(s.getCommand().getCommType() == CommandType.MOVEMENT && SquadHelper.getMiddlePointOfSquad(s) != s.getCommand().getPossition()) {
+//                        continue;
+//                    }
+                    int[] highestPosCoord = lookForHighestPos(s);
+                    Command archerHighestPos = new Command(CommandType.MOVEMENT);
+                    archerHighestPos.setCoordToMove(highestPosCoord[0], highestPosCoord[1]);
+                    s.setCommand(archerHighestPos);
+                    ///// END OF HIGHEST POS FOR ARCHER
                 } else if (s.squadType == SquadType.Warrior) {
                     ///// WHEN CALVARY CHARGES
                     if (warriorCalvaryCharge(s)) {
@@ -148,6 +152,7 @@ public class CommanderBehaviour extends CyclicBehaviour {
                 }
             }
         }
+        System.out.println(highestPos);
         return highestPosCoord;
     }
 
@@ -156,10 +161,10 @@ public class CommanderBehaviour extends CyclicBehaviour {
         Squad[] squads = comm.getBattle().getSquads();
         List<Squad> squadToAttack = new LinkedList<>();
         for (Squad enemySquad : squads) {
-            if (enemySquad.getTeam() != s.getTeam()) {
+            if (enemySquad.getTeam() != s.getTeam() && enemySquad.ifAlive) {
                 double enemyX = SquadHelper.getMiddlePointOfSquad(enemySquad).getX();
                 double enemyY = SquadHelper.getMiddlePointOfSquad(enemySquad).getY();
-                if (enemyX - range[0] <= 0 && enemyX - range[1] >= 0 && enemyY - range[2] >= 0 && enemyY - range[3] <= 0) {
+                if (enemyX - range[0] >= 0 && enemyX - range[1] <= 0 && enemyY - range[2] >= 0 && enemyY - range[3] <= 0) {
                     if (enemySquad.squadType == SquadType.Cavalry && enemySquad.getCommand().getCommType() == CommandType.CHARGE) {
                         return enemySquad;
                     }
@@ -176,10 +181,10 @@ public class CommanderBehaviour extends CyclicBehaviour {
         Squad[] squads = comm.getBattle().getSquads();
         List<Squad> squadToRunAway = new LinkedList<>();
         for (Squad enemySquad : squads) {
-            if (enemySquad.getTeam() != s.getTeam()) {
+            if (enemySquad.getTeam() != s.getTeam() && enemySquad.ifAlive) {
                 double enemyX = SquadHelper.getMiddlePointOfSquad(enemySquad).getX();
                 double enemyY = SquadHelper.getMiddlePointOfSquad(enemySquad).getY();
-                if (enemyX - range[0] <= 0 && enemyX - range[1] >= 0 && enemyY - range[2] >= 0 && enemyY - range[3] <= 0) {
+                if (enemyX - range[0] >= 0 && enemyX - range[1] <= 0 && enemyY - range[2] >= 0 && enemyY - range[3] <= 0) {
                     squadToRunAway.add(enemySquad);
                 }
             }
@@ -193,10 +198,11 @@ public class CommanderBehaviour extends CyclicBehaviour {
         Squad[] squads = comm.getBattle().getSquads();
         List<Squad> squadToMerge = new LinkedList<>();
         for (Squad alliedSquad : squads) {
-            if (alliedSquad.getTeam() == s.getTeam() && alliedSquad != s && alliedSquad.squadType == s.squadType) {
+            if (alliedSquad.getTeam() == s.getTeam() && alliedSquad != s && alliedSquad.squadType == s.squadType
+                    && alliedSquad.ifAlive) {
                 double allyX = SquadHelper.getMiddlePointOfSquad(alliedSquad).getX();
                 double allyY = SquadHelper.getMiddlePointOfSquad(alliedSquad).getY();
-                if (allyX - range[0] <= 0 && allyX - range[1] >= 0 && allyY - range[2] >= 0 && allyY - range[3] <= 0) {
+                if (allyX - range[0] >= 0 && allyX - range[1] <= 0 && allyY - range[2] >= 0 && allyY - range[3] <= 0) {
                     squadToMerge.add(alliedSquad);
                 }
             }
@@ -209,7 +215,8 @@ public class CommanderBehaviour extends CyclicBehaviour {
         Squad[] squads = comm.getBattle().getSquads();
         for (Squad enemySquad : squads) {
             if (enemySquad.getTeam() != s.getTeam() && enemySquad.squadType == SquadType.Cavalry &&
-                    enemySquad.getCommand().getCommType() == CommandType.CHARGE && enemySquad.getCommand().getSquad() == s) {
+                    enemySquad.getCommand().getCommType() == CommandType.CHARGE && enemySquad.getCommand().getSquad() == s
+                    && enemySquad.ifAlive) {
                 return true;
             }
         }
@@ -220,13 +227,13 @@ public class CommanderBehaviour extends CyclicBehaviour {
         Squad[] squads = comm.getBattle().getSquads();
         List<Squad> squadToAttack = new LinkedList<>();
         for (Squad enemySquad : squads) {
-            if (enemySquad.getTeam() != s.getTeam() && enemySquad.squadType == SquadType.Warrior) {
+            if (enemySquad.getTeam() != s.getTeam() && enemySquad.squadType == SquadType.Warrior && enemySquad.ifAlive) {
                 squadToAttack.add(enemySquad);
             } // TODO: what if nearest warrior squad is behind calvary?
         }
         if (squadToAttack.size() == 0) {
-            for(Squad enemySquad: squads) {
-                if (enemySquad.getTeam() != s.getTeam()) {
+            for (Squad enemySquad : squads) {
+                if (enemySquad.getTeam() != s.getTeam() && enemySquad.ifAlive) {
                     squadToAttack.add(enemySquad);
                 }
             }
@@ -239,8 +246,8 @@ public class CommanderBehaviour extends CyclicBehaviour {
         List<Squad> returnSquad = new LinkedList<>();
         int count_squad = 0;
         Squad[] squads = comm.getBattle().getSquads();
-        for(Squad enemySquad:squads) {
-            if(enemySquad.getTeam() != s.getTeam() && enemySquad.squadType == SquadType.Warrior) {
+        for (Squad enemySquad : squads) {
+            if (enemySquad.getTeam() != s.getTeam() && enemySquad.squadType == SquadType.Warrior && enemySquad.ifAlive) {
                 int temp = countSoldiersInSquad(enemySquad);
                 if (temp > count_squad) {
                     count_squad = temp;
@@ -248,9 +255,9 @@ public class CommanderBehaviour extends CyclicBehaviour {
                 }
             }
         }
-        if(returnSquad.size() == 0) {
-            for(Squad enemySquad:squads) {
-                if(enemySquad.getTeam() != s.getTeam()) {
+        if (returnSquad.size() == 0) {
+            for (Squad enemySquad : squads) {
+                if (enemySquad.getTeam() != s.getTeam() && enemySquad.ifAlive) {
                     int temp = countSoldiersInSquad(enemySquad);
                     if (temp > count_squad) {
                         count_squad = temp;
@@ -264,36 +271,40 @@ public class CommanderBehaviour extends CyclicBehaviour {
     }
 
     private Squad getClosest(List<Squad> squadList, int X, int Y) {
-        if (squadList.size() == 0) {
+        if (squadList == null || squadList.size() == 0) {
             return null;
         }
         Squad closestSquad = null;
         double closest = 999999999;
         for (Squad s : squadList) {
-            int cY = Double.valueOf(SquadHelper.getMiddlePointOfSquad(s).getY()).intValue();
-            int cX = Double.valueOf(SquadHelper.getMiddlePointOfSquad(s).getX()).intValue();
-            double c = Math.sqrt((cX - X) * (cX - X) + (cY - Y) * (cY - Y));
-            if (closest > c) {
-                closest = c;
-                closestSquad = s;
+            if (s.ifAlive) {
+                int cY = Double.valueOf(SquadHelper.getMiddlePointOfSquad(s).getY()).intValue();
+                int cX = Double.valueOf(SquadHelper.getMiddlePointOfSquad(s).getX()).intValue();
+                double c = Math.sqrt((cX - X) * (cX - X) + (cY - Y) * (cY - Y));
+                if (closest > c) {
+                    closest = c;
+                    closestSquad = s;
+                }
             }
         }
         return closestSquad;
     }
 
     private Squad getFurthest(List<Squad> squadList, int X, int Y) {
-        if (squadList.size() == 0) {
+        if (squadList == null || squadList.size() == 0) {
             return null;
         }
         Squad furthestSquad = null;
         double furthest = 0;
         for (Squad s : squadList) {
-            int cY = Double.valueOf(SquadHelper.getMiddlePointOfSquad(s).getY()).intValue();
-            int cX = Double.valueOf(SquadHelper.getMiddlePointOfSquad(s).getX()).intValue();
-            double c = Math.sqrt((cX - X) * (cX - X) + (cY - Y) * (cY - Y));
-            if (furthest < c) {
-                furthest = c;
-                furthestSquad = s;
+            if (s.ifAlive) {
+                int cY = Double.valueOf(SquadHelper.getMiddlePointOfSquad(s).getY()).intValue();
+                int cX = Double.valueOf(SquadHelper.getMiddlePointOfSquad(s).getX()).intValue();
+                double c = Math.sqrt((cX - X) * (cX - X) + (cY - Y) * (cY - Y));
+                if (furthest < c) {
+                    furthest = c;
+                    furthestSquad = s;
+                }
             }
         }
         return furthestSquad;
@@ -310,18 +321,18 @@ public class CommanderBehaviour extends CyclicBehaviour {
 
         int attackRangeY = Double.valueOf(comm.getMap().Y * yRange).intValue();
         int startRangeY = Double.valueOf(SquadHelper.getMiddlePointOfSquad(s).getY() - attackRangeY).intValue();
-        int stopRangeY = startRangeX + (2 * attackRangeX);
+        int stopRangeY = startRangeY + (2 * attackRangeY);
         if (startRangeY < 0) {
             startRangeY = 0;
         }
-        return new int[] {startRangeX, stopRangeX, startRangeY, stopRangeY};
+        return new int[]{startRangeX, stopRangeX, startRangeY, stopRangeY};
     }
 
     private int countSoldiersInSquad(Squad s) {
         int count = 0;
-        for(Soldier so:s.getSoldiers()) {
-            if(so.getHp() > 0) {
-                count ++;
+        for (Soldier so : s.getSoldiers()) {
+            if (so.getHp() > 0) {
+                count++;
             }
         }
         return count;
