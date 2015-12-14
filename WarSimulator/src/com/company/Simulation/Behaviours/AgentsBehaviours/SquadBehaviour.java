@@ -58,8 +58,8 @@ public abstract class SquadBehaviour extends CyclicBehaviour {
         if(commForSoldiers==null)
             return;
 
-        for(Soldier sold: squad.getSoldiers()){
-            if(commForSoldiers != null && vectorToMove != null && sold.getStatus()) {
+        for(Soldier sold: squad.getSoldiers()) {
+            if (commForSoldiers != null && vectorToMove != null && sold.getStatus()) {
                 Coord tmp = sold.getCoord().clone();
                 tmp.applyVector(vectorToMove);
                 commForSoldiers.setPossition(tmp);

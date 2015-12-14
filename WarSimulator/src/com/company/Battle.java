@@ -37,17 +37,17 @@ public class Battle {
     }
 
     protected void createBothSquads(){
-        squads = new Squad[4];
+        squads = new Squad[5];
         squads[0] = new ArcherSquad(Teams.BLUE, terrainMap, this, commanders[0]);
         squads[1] = new WarriorSquad(Teams.BLUE, terrainMap, this, commanders[0]);
         squads[2] = new ArcherSquad(Teams.RED, terrainMap, this, commanders[1]);
         squads[3] = new WarriorSquad(Teams.RED, terrainMap, this, commanders[1]);
-        //squads[4] = new WarriorSquad(Teams.RED, terrainMap, this, commanders[1]);
+        squads[4] = new CavalrySquad(Teams.RED, terrainMap, this, commanders[1]);
         squads[0].setSquad(5,5,5,5);
-        squads[1].setSquad(20,5,10,5);
+        squads[1].setSquad(20,5,9,5);
         squads[2].setSquad(5,30,5,5);
-        squads[3].setSquad(20,30,10,5);
-        //squads[4].setSquad(31,30,9,5);
+        squads[3].setSquad(20,30,9,5);
+        squads[4].setSquad(31,30,9,5);
     }
 
     public void start(){

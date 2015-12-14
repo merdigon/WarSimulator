@@ -34,6 +34,7 @@ public abstract class SoldierBehaviour extends CyclicBehaviour {
             killSoldier();
             return;
         }
+        getSoldier().getCommand().setWasListened(true);
         thinking();
         noticedEnemies.clear();
         noticedFriends.clear();

@@ -11,6 +11,7 @@ public class Command {
     Coord possition = null;
     CommandType command;
     Squad squad;
+    boolean wasListened = false;
 
     public Command(CommandType cmdtype){
         command = cmdtype;
@@ -30,4 +31,8 @@ public class Command {
     public Squad getSquad() { return squad; }
 
     public void setSquad(Squad squad) { this.squad = squad; }
+
+    public void setWasListened(boolean wl) {wasListened = wl;}
+
+    public boolean getWasListened() {return wasListened;}
 }
