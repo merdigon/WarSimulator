@@ -32,8 +32,8 @@ public class GuiCreator extends JPanel {
     public static final Color[] ARMIES = {RED_ARMY_WARRIOR, RED_ARMY_ARCHER, RED_ARMY_CAVALRY,
             BLUE_ARMY_WARRIOR, BLUE_ARMY_ARCHER, BLUE_ARMY_CAVALRY};
 
-    public static final int NUM_ROWS = 40;
-    public static final int NUM_COLS = 50;
+    public static final int NUM_ROWS = 80;
+    public static final int NUM_COLS = 100;
 
     private final Color[][] armyGrid;
     private final boolean[][] arrowGrid;
@@ -60,7 +60,7 @@ public class GuiCreator extends JPanel {
         try {
             image = ImageIO
                     .read(new File(
-                            "C:\\Users\\Szymon\\Documents\\GitHub\\WarSimulator\\WarSimulator\\out\\production\\terrain.png")); //TODO: insert your own abs path
+                            "C:\\Users\\Arkadiusz\\Documents\\GitHub\\WarSimulator\\WarSimulator\\out\\production\\terrain.png")); //TODO: insert your own abs path
         } catch (IOException ex) {
             System.out.print("Lipka");
         }
@@ -165,7 +165,7 @@ public class GuiCreator extends JPanel {
                         g2.fill(arc);
                     }
                 }
-                if (isArrow || (i == 11 && j == 11) || (i == 21 && j == 31)) {
+                if (isArrow) {
                     g.setColor(Color.BLACK);
                     g.setFont(new Font("TimesRoman", Font.BOLD, 15));
                     g2.drawString("x", Double.valueOf(x).intValue(), Double.valueOf(y).intValue());
