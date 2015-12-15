@@ -10,6 +10,9 @@ import com.company.Simulation.Behaviours.BasicBahaviours.CyclicBehaviour;
 import com.company.Simulation.Command;
 import com.company.Simulation.CommandType;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Szymon on 2015-11-09.
  */
@@ -99,21 +102,28 @@ public abstract class SquadBehaviour extends CyclicBehaviour {
         vectorToMove = v2;
     }
 
-    protected void ifMerge(){
+    protected void ifMerge(){/*
         Squad squadAimToMerge = commFromCommander.getSquad();
 
+        ArrayList<Soldier> listTmp = new ArrayList<Soldier>();
         for(Soldier sold : squad.getSoldiers()){
             commForSoldiers = new Command(CommandType.MERGE);
             sold.setCommand(commForSoldiers);
             sold.setSquad(squad);
-            squadAimToMerge.getSoldiers().add(sold);
+            listTmp.add(sold);
+        }
+        for(Soldier sld : listTmp){
+            squadAimToMerge.getSoldiers().add(sld);
         }
 
-        squad.getSoldiers().clear();
+        listTmp.clear();
+
+        squad.getSoldiers().clear();*/
     }
 
     protected void ifCharge(){
-        ifAttack();
+        commFromCommander.setPossition(SquadHelper.getMiddlePointOfSquad(commFromCommander.getSquad()));
+        ifMovement();
     }
 
     //atak jest ró¿ny dla ka¿dego squadu

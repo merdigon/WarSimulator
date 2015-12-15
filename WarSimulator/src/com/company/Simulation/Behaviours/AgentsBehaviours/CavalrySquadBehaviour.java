@@ -23,6 +23,10 @@ public class CavalrySquadBehaviour extends SquadBehaviour{
         Coord squadMed = SquadHelper.getMiddlePointOfSquad(squad);
         Coord enemyMed = SquadHelper.getMiddlePointOfSquad(commFromCommander.getSquad());
 
+        if(enemyMed == null)
+        {
+            int a=9;
+        }
         Vector2 v2 = squadMed.giveVectorToCoord(enemyMed);
 
         commForSoldiers = new Command(CommandType.ATTACK);

@@ -51,6 +51,7 @@ public class Map {
                             double hpToTake = (110 * (400 - cav.getVelocity())) / 275;
                             if (aim.getHp() < hpToTake) {
                                 cav.setVelocity((aim.getHp() * 275) / 110);
+                                aim.setHp(-10);
                                 aim.killSoldier();
                                 changeSoldierPoss(x1, y1, x2, y2);
                                 return true;

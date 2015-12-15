@@ -286,8 +286,8 @@ public class CommanderBehaviour extends CyclicBehaviour {
         //int count_squad = 0;
         Squad[] squads = comm.getBattle().getSquads();
         for (Squad enemySquad : squads) {
-            if (enemySquad.getTeam() != s.getTeam() && enemySquad.checkIfAlive() && enemySquad.squadType == SquadType.Warrior
-                    && enemySquad.getCommand().getCommType() == CommandType.ATTACK &&
+            if (enemySquad.getTeam() != s.getTeam() && enemySquad.checkIfAlive() && enemySquad.squadType == SquadType.Warrior && enemySquad.getCommand() != null
+                    && enemySquad.getCommand().getCommType() == CommandType.ATTACK  &&
                     enemySquad.getCommand().getSquad().squadType == SquadType.Warrior ) {
                 returnSquad.add(enemySquad);
             }

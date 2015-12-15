@@ -1,6 +1,7 @@
 package com.company.Simulation.Behaviours;
 
 import com.company.Simulation.Agents.Soldiers.Soldier;
+import com.company.Simulation.Agents.Squads.SquadType;
 import com.company.Simulation.Behaviours.BasicBahaviours.OneShotBehaviour;
 
 import java.util.Random;
@@ -43,7 +44,10 @@ public class AttackBehaviour extends OneShotBehaviour {
 
         //super trudny algorytm obliczaj¹cy szanse na trafienie na podstawie wysokoœci, ranienie go oraz ustawianie tego, ¿e zosta³ zaatakowany
         if((generator.nextDouble()*10)>(4-addPoint)) {
-            defender.changeHp(40);
+            if(attacker.getSquad().squadType == SquadType.Cavalry)
+                defender.changeHp(60);
+            else
+                defender.changeHp(40);
             defender.setWasAttacked();
         }
     }

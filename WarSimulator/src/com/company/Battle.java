@@ -37,17 +37,39 @@ public class Battle {
     }
 
     protected void createBothSquads(){
-        squads = new Squad[4];
-        squads[0] = new ArcherSquad(Teams.BLUE, terrainMap, this, commanders[0]);
-        squads[1] = new WarriorSquad(Teams.BLUE, terrainMap, this, commanders[0]);
-        squads[2] = new ArcherSquad(Teams.RED, terrainMap, this, commanders[1]);
-        //squads[3] = new WarriorSquad(Teams.RED, terrainMap, this, commanders[1]);
-        squads[3] = new CavalrySquad(Teams.RED, terrainMap, this, commanders[1]);
-        squads[0].setSquad(5,5,5,5);
-        squads[1].setSquad(20,5,9,5);
-        squads[2].setSquad(5,30,5,5);
-        //squads[3].setSquad(20,30,9,5);
-        squads[3].setSquad(31,30,9,5);
+        squads = new Squad[15];
+        squads[4] = new ArcherSquad(Teams.RED, terrainMap, this, commanders[1]);
+        squads[1] = new WarriorSquad(Teams.RED, terrainMap, this, commanders[1]);
+        squads[5] = new ArcherSquad(Teams.RED, terrainMap, this, commanders[1]);
+        squads[3] = new WarriorSquad(Teams.RED, terrainMap, this, commanders[1]);
+        squads[0] = new CavalrySquad(Teams.RED, terrainMap, this, commanders[1]);
+        squads[2] = new CavalrySquad(Teams.RED, terrainMap, this, commanders[1]);
+        squads[6] = new CavalrySquad(Teams.RED, terrainMap, this, commanders[1]);
+        //squads[7] = new CavalrySquad(Teams.RED, terrainMap, this, commanders[1]);
+        squads[7] = new CavalrySquad(Teams.BLUE, terrainMap, this, commanders[0]);
+        squads[8] = new CavalrySquad(Teams.BLUE, terrainMap, this, commanders[0]);
+        squads[9] = new CavalrySquad(Teams.BLUE, terrainMap, this, commanders[0]);
+        squads[10] = new CavalrySquad(Teams.BLUE, terrainMap, this, commanders[0]);
+        squads[11] = new CavalrySquad(Teams.BLUE, terrainMap, this, commanders[0]);
+        squads[12] = new WarriorSquad(Teams.BLUE, terrainMap, this, commanders[0]);
+        squads[13] = new WarriorSquad(Teams.BLUE, terrainMap, this, commanders[0]);
+        squads[14] = new WarriorSquad(Teams.BLUE, terrainMap, this, commanders[0]);
+        squads[0].setSquad(5, 15, 20, 5);
+        squads[1].setSquad(25,5,25,5);
+        squads[2].setSquad(45, 15, 20, 5);
+        squads[3].setSquad(70,5,5,5);
+        squads[4].setSquad(5, 5, 15, 5);
+        squads[5].setSquad(55, 5, 10, 5);
+        squads[6].setSquad(75, 15, 5, 8);
+        //squads[7].setSquad(75, 25, 5, 8);
+        squads[7].setSquad(20, 60, 6, 5);
+        squads[8].setSquad(31, 60, 6, 5);
+        squads[9].setSquad(42, 60, 6, 5);
+        squads[10].setSquad(53, 60, 6, 5);
+        squads[11].setSquad(64, 60, 6, 5);
+        squads[12].setSquad(20, 70, 15, 5);
+        squads[13].setSquad(35, 70, 15, 5);
+        squads[14].setSquad(50, 70, 20, 5);
     }
 
     public void start(){
@@ -83,7 +105,7 @@ public class Battle {
             gui.changeGrid(squads[0].terrainMap);
         }
 
-        for (Squad squad : squads) {
+        /*for (Squad squad : squads) {
             if (squad.squadType == SquadType.Cavalry) {
                 for (Soldier sld : squad.getSoldiers()) {
                     ((Cavalry) sld).addTimeAfterLastThinking((System.nanoTime() - lastCycle) / 1000000);
@@ -93,7 +115,7 @@ public class Battle {
                     }
                 }
             }
-        }
+        }*/
     }
     public Squad[] getSquads(){
         return this.squads;

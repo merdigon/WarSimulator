@@ -13,11 +13,15 @@ public class SquadHelper {
         int nr = 0;
         int xSum = 0;
         int ySum = 0;
-        for(Soldier soldier : squad.getSoldiers()){
-            if(soldier.getStatus()){
-                nr++;
-                xSum += soldier.getCoord().getX();
-                ySum += soldier.getCoord().getY();
+        if(squad!=null) {
+            for (Soldier soldier : squad.getSoldiers()) {
+                if (soldier.getStatus()) {
+                    nr++;
+                    if(soldier.getCoord() == null)
+                    {}
+                    xSum += soldier.getCoord().getX();
+                    ySum += soldier.getCoord().getY();
+                }
             }
         }
         if(nr==0)

@@ -11,6 +11,7 @@ import com.company.Simulation.Agents.Soldiers.Soldier;
 import com.company.Simulation.Agents.Squads.SquadType;
 import com.company.Simulation.Behaviours.AttackBehaviour;
 import com.company.Simulation.Behaviours.BasicBahaviours.CyclicBehaviour;
+import com.company.Simulation.Command;
 import com.company.Simulation.CommandType;
 
 import java.util.ArrayList;
@@ -30,12 +31,14 @@ public abstract class SoldierBehaviour extends CyclicBehaviour {
     //checked
     @Override
     public void action() {
-        if(!checkIfAlive()){
+        if (!checkIfAlive()) {
             getSoldier().killSoldier();
             return;
         }
-        getSoldier().getCommand().setWasListened(true);
-        thinking();
+        Command comm = getSoldier().getCommand();
+        if (comm != null) {
+            thinking();
+        }
         noticedEnemies.clear();
         noticedFriends.clear();
     }
