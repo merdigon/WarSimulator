@@ -4,6 +4,7 @@ import com.company.Enviroment.PointOfTerrain;
 import com.company.Helper.CoordHelper.Coord;
 import com.company.Helper.SquadHelper;
 import com.company.Simulation.Agents.Commander;
+import com.company.Simulation.Agents.Soldiers.Cavalry;
 import com.company.Simulation.Agents.Soldiers.Soldier;
 import com.company.Simulation.Agents.Squads.Squad;
 import com.company.Simulation.Agents.Squads.SquadType;
@@ -245,7 +246,9 @@ public class CommanderBehaviour extends CyclicBehaviour {
                 if (enemyX - range[0] >= 0 && enemyX - range[1] <= 0 && enemyY - range[2] >= 0 && enemyY - range[3] <= 0) {
                     try {
                         if (enemySquad.squadType == SquadType.Cavalry &&
-                                enemySquad.getCommand().getCommType() == CommandType.CHARGE && enemySquad.getCommand().getSquad() == s) {
+                                enemySquad.getCommand().getCommType() == CommandType.CHARGE
+                                && enemySquad.getCommand().getSquad() == s
+                                && getAvgSpeed(enemySquad) > 300) {
                             return true;
                         }
                     } catch (NullPointerException e) {
@@ -371,6 +374,20 @@ public class CommanderBehaviour extends CyclicBehaviour {
             }
         }
         return count;
+    }
+
+    private double getAvgSpeed(Squad s) {
+        int count = 0;
+        int sum = 0;
+        for(Soldier sol:s.getSoldiers()){
+            if(sol.getHp() > 0) {
+                count++;
+                sum+=((Cavalry)sol).getVelocity();
+            }
+        }
+        if(count == 0){
+            return 500;
+        } else return (sum/count);
     }
 
     private boolean isInTheSamePos(int [] coords, Squad s) {
