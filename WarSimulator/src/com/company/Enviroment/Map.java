@@ -48,9 +48,9 @@ public class Map {
                 if(aim.getSquad().squadType != SquadType.Cavalry) {
                     if (aim.getSquad().getTeam() != cav.getSquad().getTeam()) {
                         if (cav.getVelocity() < 400) {
-                            double hpToTake = (60 * (400 - cav.getVelocity())) / 275;
+                            double hpToTake = (110 * (400 - cav.getVelocity())) / 275;
                             if (aim.getHp() < hpToTake) {
-                                cav.setVelocity((aim.getHp() * 275) / 60);
+                                cav.setVelocity((aim.getHp() * 275) / 110);
                                 aim.killSoldier();
                                 changeSoldierPoss(x1, y1, x2, y2);
                                 return true;
