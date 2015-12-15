@@ -128,9 +128,11 @@ public class CommanderBehaviour extends CyclicBehaviour {
 
                     ///// CAVALRY CHARGE
                     Squad squadToCharge = cavalryChargeAt(s);
-                    Command cavalryChargeCommand = new Command(CommandType.CHARGE);
-                    cavalryChargeCommand.setSquad(squadToCharge);
-                    s.setCommand(cavalryChargeCommand);
+                    if(squadToCharge != null) {
+                        Command cavalryChargeCommand = new Command(CommandType.CHARGE);
+                        cavalryChargeCommand.setSquad(squadToCharge);
+                        s.setCommand(cavalryChargeCommand);
+                    }
                     ///// END OF CAVALRY CHARGE
                 }
             }
@@ -284,9 +286,9 @@ public class CommanderBehaviour extends CyclicBehaviour {
         //int count_squad = 0;
         Squad[] squads = comm.getBattle().getSquads();
         for (Squad enemySquad : squads) {
-            if (enemySquad.getTeam() != s.getTeam() && enemySquad.squadType == SquadType.Warrior
+            if (enemySquad.getTeam() != s.getTeam() && enemySquad.checkIfAlive() && enemySquad.squadType == SquadType.Warrior
                     && enemySquad.getCommand().getCommType() == CommandType.ATTACK &&
-                    enemySquad.getCommand().getSquad().squadType == SquadType.Warrior && enemySquad.checkIfAlive()) {
+                    enemySquad.getCommand().getSquad().squadType == SquadType.Warrior ) {
                 returnSquad.add(enemySquad);
             }
         }
