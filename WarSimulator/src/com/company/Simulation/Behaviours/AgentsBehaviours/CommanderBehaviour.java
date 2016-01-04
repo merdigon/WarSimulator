@@ -172,11 +172,22 @@ public class CommanderBehaviour extends CyclicBehaviour {
         int[] range = startStopRange(s, 0.5, 0.5);
         Squad[] squads = comm.getBattle().getSquads();
         List<Squad> squadToAttack = new LinkedList<>();
+        outerloop:
         for (Squad enemySquad : squads) {
             if (enemySquad.getTeam() != s.getTeam() && enemySquad.checkIfAlive()) {
                 double enemyX = SquadHelper.getMiddlePointOfSquad(enemySquad).getX();
                 double enemyY = SquadHelper.getMiddlePointOfSquad(enemySquad).getY();
                 if (enemyX - range[0] >= 0 && enemyX - range[1] <= 0 && enemyY - range[2] >= 0 && enemyY - range[3] <= 0) {
+                    int[] alliesRange = startStopRange(enemySquad, 0.1, 0.1);
+                    for(Squad alliedSquad : squads) {
+                        if (alliedSquad.getTeam() == s.getTeam() && alliedSquad.checkIfAlive()) {
+                            double allyX = SquadHelper.getMiddlePointOfSquad(alliedSquad).getX();
+                            double allyY = SquadHelper.getMiddlePointOfSquad(alliedSquad).getY();
+                            if (allyX - alliesRange[0] >= 0 && allyX - alliesRange[1] <= 0 && allyY - alliesRange[2] >= 0 && allyY - alliesRange[3] <= 0) {
+                                continue outerloop;
+                            }
+                        }
+                    }
                     if (enemySquad.squadType == SquadType.Cavalry && enemySquad.getCommand().getCommType() == CommandType.CHARGE) {
                         return enemySquad;
                     }
