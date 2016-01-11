@@ -21,6 +21,8 @@ public class Battle {
     long lastSoldiersCycle;
     long lastCycle;
 
+    private volatile boolean running = false;
+
 
     public Battle(){
         terrainMap = new Map();
@@ -89,7 +91,8 @@ public class Battle {
     public void start(){
         init();
         while(true){
-            lifeCycle();
+            if(running)
+                lifeCycle();
         }
     }
 
@@ -133,5 +136,13 @@ public class Battle {
     }
     public Squad[] getSquads(){
         return this.squads;
+    }
+
+    public void startLifeCycle() {
+        running = true;
+    }
+
+    public void stopLifeCycle() {
+        running = false;
     }
 }

@@ -55,7 +55,7 @@ public class GuiCreator extends JPanel {
         // eastPanel.add(b2);
 
         frame.add(this);
-        buttonPanel = new ButtonPanel(this);
+        buttonPanel = new ButtonPanel(this, battle);
         frame.add(buttonPanel, BorderLayout.EAST);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);

@@ -1,5 +1,7 @@
 package com.company.Gui;
 
+import com.company.Battle;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,72 +10,58 @@ import javax.swing.*;
 
 public class ButtonPanel extends JPanel {
 
-	private Thread simThread;
-	private JLabel redArchers;
+    private Thread simThread;
+    private JLabel redArchers;
     private JLabel redWarriors;
     private JLabel redCavalry;
     private JLabel blueArchers;
     private JLabel blueWarriors;
     private JLabel blueCavalry;
 
-	public ButtonPanel(final JPanel p) {
+    public ButtonPanel(final JPanel p, final Battle b) {
 
-		JButton b1 = new JButton("Start");
-		b1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				simThread = new Thread(new Runnable() {
+        JButton b1 = new JButton("Start");
+        b1.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                b.startLifeCycle();
+            }
+        });
 
-					@Override
-					public void run() {
+        JButton b2 = new JButton("Stop");
+        b2.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                b.stopLifeCycle();
+            }
+        });
 
-						while (!Thread.currentThread().isInterrupted()) {
-							// do sth
-							//p.updateUI();
-						}
+        JButton b3 = new JButton("Wyjście");
+        b3.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
 
-					}
-				});
-				simThread.start();
-			}
-		});
+            }
+        });
 
-		JButton b2 = new JButton("Stop");
-		b2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+        setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.insets = new Insets(2, 2, 2, 2);
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.gridwidth = 2;
+        add(b1, gbc);
 
-				simThread.interrupt();
+        gbc.gridy++;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.gridwidth = 2;
+        add(b2, gbc);
+        gbc.gridy++;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.gridwidth = 2;
+        add(b3, gbc);
 
-			}
-		});
-
-		JButton b3 = new JButton("Wyj�cie");
-		b3.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				System.exit(0);
-
-			}
-		});
-
-		setLayout(new GridBagLayout());
-		GridBagConstraints gbc = new GridBagConstraints();
-		gbc.gridx = 0;
-		gbc.gridy = 0;
-		gbc.insets = new Insets(2, 2, 2, 2);
-		gbc.fill = GridBagConstraints.NONE;
-		gbc.gridwidth = 2;
-		add(b1, gbc);
-
-		gbc.gridy++;
-		gbc.fill = GridBagConstraints.NONE;
-		gbc.gridwidth = 2;
-		add(b2, gbc);
-		gbc.gridy++;
-		gbc.fill = GridBagConstraints.NONE;
-		gbc.gridwidth = 2;
-		add(b3, gbc);
-
-		redArchers  = new JLabel("Łucznicy: 0",
-				JLabel.CENTER);
+        redArchers = new JLabel("Łucznicy: 0",
+                JLabel.CENTER);
         redArchers.setForeground(Color.RED);
         redWarriors = new JLabel("Piechota: 0",
                 JLabel.CENTER);
@@ -92,8 +80,8 @@ public class ButtonPanel extends JPanel {
         blueCavalry.setForeground(Color.BLUE);
         gbc.gridy++;
         add(new JLabel("________", JLabel.CENTER), gbc);
-		gbc.gridy++;
-		add(redArchers, gbc);
+        gbc.gridy++;
+        add(redArchers, gbc);
         gbc.gridy++;
         add(redWarriors, gbc);
         gbc.gridy++;
@@ -107,9 +95,9 @@ public class ButtonPanel extends JPanel {
         gbc.gridy++;
         add(blueCavalry, gbc);
 
-	}
+    }
 
-	public void setRedArchersLabel(int count) {
+    public void setRedArchersLabel(int count) {
         redArchers.setText("Łucznicy: " + count);
     }
 
