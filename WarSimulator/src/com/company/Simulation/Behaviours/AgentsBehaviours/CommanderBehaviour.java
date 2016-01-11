@@ -2,6 +2,7 @@ package com.company.Simulation.Behaviours.AgentsBehaviours;
 
 import com.company.Enviroment.PointOfTerrain;
 import com.company.Helper.CoordHelper.Coord;
+import com.company.Helper.CoordHelper.CoordHelper;
 import com.company.Helper.SquadHelper;
 import com.company.Simulation.Agents.Commander;
 import com.company.Simulation.Agents.Soldiers.Cavalry;
@@ -58,9 +59,9 @@ public class CommanderBehaviour extends CyclicBehaviour {
 
                     ///// move to the best (highest) position in range (10% of the map w and h)
                     if (!isEnemyNear(s, 0.3, 0.3)) {
-                        int[] highestPosCoord = lookForHighestPos(s);
+                        int[] highestPosCoord = lookForHighestPos(s, 0.1, 0.1);
                         if (highestPosCoord != null) {
-                            if (!isInTheSamePos(highestPosCoord, s)) {
+                             {
                                 Command archerHighestPos = new Command(CommandType.MOVEMENT);
                                 archerHighestPos.setCoordToMove(highestPosCoord[0], highestPosCoord[1]);
                                 s.setCommand(archerHighestPos);
@@ -82,6 +83,23 @@ public class CommanderBehaviour extends CyclicBehaviour {
 
 
                 } else if (s.squadType == SquadType.Warrior) {
+                    /////!!!!! SPECIAL TACTIC (fall back to highest position)
+                    if(s.getTeam() == Teams.BLUE) {
+                        if (!isEnemyNear(s, 0.1, 0.1)) {
+                            int[] posToMoveSpecial = warriorSpecialTactic(s);
+                            if (posToMoveSpecial != null) {
+                                Command warriorSpecial;
+                                if (!isInTheSamePos(posToMoveSpecial, s)) {
+                                    warriorSpecial = new Command(CommandType.MOVEMENT);
+                                    warriorSpecial.setCoordToMove(posToMoveSpecial[0], posToMoveSpecial[1]);
+                                } else {
+                                    warriorSpecial = new Command(CommandType.HOLD_POSSITION);
+                                }
+                                s.setCommand(warriorSpecial);
+                                continue;
+                            }
+                        }
+                    }
                     ///// WHEN CALVARY CHARGES
                     if (warriorCalvaryCharge(s)) {
                         Command warriorCalvaryChargeCommand = new Command(CommandType.HOLD_POSSITION);
@@ -139,11 +157,11 @@ public class CommanderBehaviour extends CyclicBehaviour {
         }
     }
 
-    private int[] lookForHighestPos(Squad s) {
+    private int[] lookForHighestPos(Squad s, double rangeX, double rangeY) {
         double highestPos = 99999999;
         int[] highestPosCoord = {99999999, 99999999};
 
-        int[] range = startStopRange(s, 0.1, 0.1);
+        int[] range = startStopRange(s, rangeX, rangeY);
         for (int i = range[0]; i < range[1]; i++) {
             try {
                 PointOfTerrain[] pointOfTerrains = comm.getMap().Terrain[i];
@@ -292,6 +310,10 @@ public class CommanderBehaviour extends CyclicBehaviour {
                 Double.valueOf(SquadHelper.getMiddlePointOfSquad(s).getY()).intValue());
     }
 
+    private int[] warriorSpecialTactic(Squad s){
+        return lookForHighestPos(s, 0.5, 0.5);
+    }
+
     private Squad cavalryChargeAt(Squad s) {
         List<Squad> returnSquad = new LinkedList<>();
         //int count_squad = 0;
@@ -377,16 +399,6 @@ public class CommanderBehaviour extends CyclicBehaviour {
             startRangeY = 0;
         }
         return new int[]{startRangeX, stopRangeX, startRangeY, stopRangeY};
-    }
-
-    private int countSoldiersInSquad(Squad s) {
-        int count = 0;
-        for (Soldier so : s.getSoldiers()) {
-            if (so.getHp() > 0) {
-                count++;
-            }
-        }
-        return count;
     }
 
     private double getAvgSpeed(Squad s) {
