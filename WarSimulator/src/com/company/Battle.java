@@ -36,6 +36,20 @@ public class Battle {
         createBothSquads();
     }
 
+    public int getNumberOfAlive(Teams color, SquadType type){
+        int soldiers = 0;
+        for(Squad squad : squads){
+            if(squad.team == color && squad.squadType == type){
+                for(Soldier sold : squad.getSoldiers())
+                {
+                    if(sold.getStatus())
+                        soldiers++;
+                }
+            }
+        }
+        return soldiers;
+    }
+
     protected void createBothSquads(){
         squads = new Squad[15];
         squads[4] = new ArcherSquad(Teams.RED, terrainMap, this, commanders[1]);
