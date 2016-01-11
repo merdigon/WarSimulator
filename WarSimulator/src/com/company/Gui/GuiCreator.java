@@ -11,9 +11,9 @@ import java.io.IOException;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 
+import com.company.Battle;
 import com.company.Enviroment.Map;
 import com.company.Enviroment.PointOfTerrain;
 import com.company.Simulation.Agents.Squads.SquadType;
@@ -38,9 +38,14 @@ public class GuiCreator extends JPanel {
     private final Color[][] armyGrid;
     private final boolean[][] arrowGrid;
 
+    private ButtonPanel buttonPanel;
+
+    private Battle battle;
+
     BufferedImage image;
 
-    public GuiCreator() {
+    public GuiCreator(Battle battle) {
+        this.battle = battle;
         this.armyGrid = new Color[NUM_ROWS][NUM_COLS];
         this.arrowGrid = new boolean[NUM_ROWS][NUM_COLS];
         JFrame frame = new JFrame("WarSimulator");
@@ -50,7 +55,8 @@ public class GuiCreator extends JPanel {
         // eastPanel.add(b2);
 
         frame.add(this);
-        frame.add(new ButtonPanel(this), BorderLayout.EAST);
+        buttonPanel = new ButtonPanel(this);
+        frame.add(buttonPanel, BorderLayout.EAST);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
@@ -90,6 +96,14 @@ public class GuiCreator extends JPanel {
                 this.arrowGrid[i][j] = false;
             }
         }
+
+        //Update labels
+        buttonPanel.setRedArchersLabel(battle.getNumberOfAlive(Teams.RED, SquadType.Archer));
+        buttonPanel.setRedWarriorsLabel(battle.getNumberOfAlive(Teams.RED, SquadType.Warrior));
+        buttonPanel.setRedCavalryLabel(battle.getNumberOfAlive(Teams.RED, SquadType.Cavalry));
+        buttonPanel.setBlueArchersLabel(battle.getNumberOfAlive(Teams.BLUE, SquadType.Archer));
+        buttonPanel.setBlueWarriorsLabel(battle.getNumberOfAlive(Teams.BLUE, SquadType.Warrior));
+        buttonPanel.setBlueCavalryLabel(battle.getNumberOfAlive(Teams.BLUE, SquadType.Cavalry));
 
         int i = 0;
         for (PointOfTerrain[] tp : m.Terrain) {

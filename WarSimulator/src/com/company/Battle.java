@@ -25,7 +25,7 @@ public class Battle {
     public Battle(){
         terrainMap = new Map();
         commanders = new Commander[2];
-        gui = new GuiCreator();
+        gui = new GuiCreator(this);
         lastSoldiersCycle = System.nanoTime();
         lastCycle = System.nanoTime();
     }
