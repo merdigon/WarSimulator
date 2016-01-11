@@ -20,6 +20,7 @@ public class Battle {
     Squad[] squads;
     long lastSoldiersCycle;
     long lastCycle;
+    public boolean working = true;
 
 
     public Battle(){
@@ -88,7 +89,7 @@ public class Battle {
 
     public void start(){
         init();
-        while(true){
+        while(working){
             lifeCycle();
         }
     }
