@@ -89,8 +89,9 @@ public class Battle {
 
     public void start(){
         init();
-        while(working){
-            lifeCycle();
+        while(true){
+            if(working)
+                lifeCycle();
         }
     }
 
