@@ -10,7 +10,7 @@ import com.company.Simulation.Behaviours.BasicBahaviours.WakerBehaviour;
  */
 public class ArrowPhysic extends Agent {
 
-    //squad ³uczniczy albo sami ³ucznicy wywo³uj¹ setNextArrowAttack (wystrzelenie strza³y w powietrze)
+    //squad ï¿½uczniczy albo sami ï¿½ucznicy wywoï¿½ujï¿½ setNextArrowAttack (wystrzelenie strzaï¿½y w powietrze)
     private static int arrowSpeed = 25; //ilosc milisekund na 1 kratke
     public ArrowPhysic(Map map){
         simMap = map;
@@ -21,29 +21,35 @@ public class ArrowPhysic extends Agent {
     Map simMap;
     public void setNewArrowAttack(int sx, int sy, final int x, final int y){
 
-        //dodaæ obliczanie czasu lotu strza³y
+        //dodaï¿½ obliczanie czasu lotu strzaï¿½y
 
         int arrowTimeout = (int)(Math.sqrt(Math.pow(x - sx, 2) + Math.pow(y - sy, 2)) * arrowSpeed);
 
         if(arrowFrequency == 10) {
-            simMap.Terrain[x][y].setArrowHit();
-            arrowFrequency = 0;
+            if (x < simMap.X && x >= 0 && y < simMap.Y && y >= 0) {
+                simMap.Terrain[x][y].setArrowHit();
+                arrowFrequency = 0;
+            }
         }
         else
             arrowFrequency++;
-
 
         addBehaviour(
                 new WakerBehaviour(arrowTimeout) {
                     public void action() {
                         Soldier sld;
-                        if ((sld = simMap.Terrain[x][y].getSoldier()) != null) {
-                            sld.addBehaviour(new ArrowHitBehaviour(sld));
+                        if (x < simMap.X && x >= 0 && y < simMap.Y && y >= 0) {
+                            if ((sld = simMap.Terrain[x][y].getSoldier()) != null) {
+                                sld.addBehaviour(new ArrowHitBehaviour(sld));
+                            }
                         }
+                        //else
+                          //  System.out.println("PoszÅ‚o");
+
                     }
                 }
         );
     }
 
-    //dodaæ metody obliczaj¹ce lot strza³
+    //dodaï¿½ metody obliczajï¿½ce lot strzaï¿½
 }

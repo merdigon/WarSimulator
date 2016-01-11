@@ -96,7 +96,7 @@ public class GuiCreator extends JPanel {
             int j = 0;
             for (PointOfTerrain p : tp) {
                 Soldier s = p.getSoldier();
-                if (p.getArrowHit()) {
+                if (p.ifArrowHit()) {
                     this.arrowGrid[i][j] = true;
                 }
                 if (s != null) {
