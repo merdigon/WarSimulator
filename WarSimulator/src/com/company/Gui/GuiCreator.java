@@ -8,6 +8,8 @@ import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
@@ -16,6 +18,7 @@ import javax.swing.*;
 import com.company.Battle;
 import com.company.Enviroment.Map;
 import com.company.Enviroment.PointOfTerrain;
+import com.company.Main;
 import com.company.Simulation.Agents.Squads.SquadType;
 import com.company.Simulation.Teams;
 import com.company.Simulation.Agents.Soldiers.Soldier;
@@ -64,11 +67,27 @@ public class GuiCreator extends JPanel {
 
         image = null;
         try {
-            image = ImageIO
-                    .read(new File(
-                            "C:\\Users\\Arkadiusz\\Documents\\GitHub\\WarSimulator\\WarSimulator\\out\\production\\terrain.png")); //TODO: insert your own abs path
+            ClassLoader loader = Main.class.getClassLoader();
+            Path currentRelativePath = Paths.get("");
+            String s = currentRelativePath.toAbsolutePath().toString();
+            File subDir_1 = new File(s, "WarSimulator");
+            File subDir = new File(subDir_1, "out");
+            File subDir2 = new File(subDir, "production");
+            File file = new File(subDir2, "terrain.png");
+            System.out.println(s);
+            image = ImageIO.read(file);
         } catch (IOException ex) {
-            System.out.print("Lipka");
+            System.out.print("Nie wczytało w GuiCreator");
+            Path currentRelativePath = Paths.get("");
+            String s = currentRelativePath.toAbsolutePath().toString();
+            File subDir3 = new File(s, "out");
+            File subDir4 = new File(subDir3, "production");
+            File file2 = new File(subDir4, "terrain.png");
+            try {
+                image = ImageIO.read(file2);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
 
