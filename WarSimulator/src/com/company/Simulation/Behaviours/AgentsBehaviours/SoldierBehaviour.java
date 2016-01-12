@@ -131,7 +131,7 @@ public abstract class SoldierBehaviour extends CyclicBehaviour {
 
     protected void runToFriends(){
         Coord friendsMid = SquadHelper.getMiddlePointOfSquad(getSoldier().getSquad());
-        move((int)friendsMid.getX(), (int)friendsMid.getY());
+        move((int)friendsMid.getX(),(int)friendsMid.getY());
     }
 
     protected void runFromEnemies(){
@@ -149,9 +149,11 @@ public abstract class SoldierBehaviour extends CyclicBehaviour {
 
     protected void additionalMovement(){}
 
+    protected void additionalStop() {}
+
     //checked
     protected boolean move(int xRelative, int yRelative){
-        additionalMovement();
+        //additionalMovement();
         int oldRelX = xRelative;
         int oldRelY = yRelative;
 /*
@@ -253,7 +255,8 @@ public abstract class SoldierBehaviour extends CyclicBehaviour {
     protected void listenCommand()  {
         if(getSoldier().getCommand() != null && (getSoldier().getCommand().getCommType() == CommandType.MOVEMENT || getSoldier().getCommand().getCommType() == CommandType.BACK)){
             Coord enemyCoord = getSoldier().getCommand().getPossition();
-            move((int)enemyCoord.getX(), (int)enemyCoord.getY());
+
+                    move((int)enemyCoord.getX(),(int)enemyCoord.getY());
         }
         else if(getSoldier().getCommand() != null && getSoldier().getCommand().getCommType() == CommandType.ATTACK){
             attackFromCommand();
@@ -305,6 +308,7 @@ public abstract class SoldierBehaviour extends CyclicBehaviour {
         coordToRunAway.applyVector(new Vector2(-1,0));
         if(coordToRunAway.getX()<=0)
             getSoldier().killSoldier();
-        move((int)coordToRunAway.getX(),(int)coordToRunAway.getY());
+
+                move((int)coordToRunAway.getX(),(int)coordToRunAway.getY());
     }
 }
