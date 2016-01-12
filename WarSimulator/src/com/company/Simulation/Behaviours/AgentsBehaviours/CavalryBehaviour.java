@@ -1,6 +1,8 @@
 package com.company.Simulation.Behaviours.AgentsBehaviours;
 
 import com.company.Helper.CoordHelper.Coord;
+import com.company.Helper.CoordHelper.Vector2;
+import com.company.Helper.SquadHelper;
 import com.company.Simulation.Agents.Soldiers.Cavalry;
 import com.company.Simulation.Agents.Soldiers.Soldier;
 import com.company.Simulation.Behaviours.AttackBehaviour;
@@ -63,5 +65,50 @@ public class CavalryBehaviour extends SoldierBehaviour {
     @Override
     protected void additionalMovement(){
         ifDecideToMove();
+    }
+
+    @Override
+    protected void additionalStop(){
+        ifDecideNotToMove();
+    }
+
+    @Override
+    protected void listenCommand()  {
+        if(getSoldier().getCommand() != null && (getSoldier().getCommand().getCommType() == CommandType.MOVEMENT || getSoldier().getCommand().getCommType() == CommandType.BACK)){
+            Coord enemyCoord = getSoldier().getCommand().getPossition();
+
+            if(!move((int)enemyCoord.getX(),(int)enemyCoord.getY()))
+                additionalStop();
+            else
+                additionalMovement();
+        }
+        else if(getSoldier().getCommand() != null && getSoldier().getCommand().getCommType() == CommandType.ATTACK){
+            attackFromCommand();
+        }
+        else if(getSoldier().getCommand() != null && getSoldier().getCommand().getCommType() == CommandType.MERGE){
+            runToFriends();
+        }
+    }
+
+    @Override
+    protected void runAway(){
+        Coord coordToRunAway = getSoldier().getCoord().clone();
+        coordToRunAway.applyVector(new Vector2(-1,0));
+        if(coordToRunAway.getX()<=0)
+            getSoldier().killSoldier();
+
+        if(!move((int)coordToRunAway.getX(),(int)coordToRunAway.getY()))
+            additionalStop();
+        else
+            additionalMovement();
+    }
+
+    @Override
+    protected void runToFriends(){
+        Coord friendsMid = SquadHelper.getMiddlePointOfSquad(getSoldier().getSquad());
+        if(!move((int)friendsMid.getX(),(int)friendsMid.getY()))
+            additionalStop();
+        else
+            additionalMovement();
     }
 }

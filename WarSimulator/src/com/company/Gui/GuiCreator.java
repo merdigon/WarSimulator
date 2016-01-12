@@ -67,7 +67,6 @@ public class GuiCreator extends JPanel {
 
         image = null;
         try {
-            ClassLoader loader = Main.class.getClassLoader();
             Path currentRelativePath = Paths.get("");
             String s = currentRelativePath.toAbsolutePath().toString();
             File subDir_1 = new File(s, "WarSimulator");

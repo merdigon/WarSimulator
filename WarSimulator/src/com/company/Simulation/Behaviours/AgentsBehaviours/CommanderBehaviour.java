@@ -1,5 +1,6 @@
 package com.company.Simulation.Behaviours.AgentsBehaviours;
 
+import com.company.Battles;
 import com.company.Enviroment.PointOfTerrain;
 import com.company.Helper.CoordHelper.Coord;
 import com.company.Helper.CoordHelper.CoordHelper;
@@ -84,8 +85,8 @@ public class CommanderBehaviour extends CyclicBehaviour {
 
                 } else if (s.squadType == SquadType.Warrior) {
                     /////!!!!! SPECIAL TACTIC (fall back to highest position)
-                    if(s.getTeam() == Teams.BLUE) {
-                        if (!isEnemyNear(s, 0.1, 0.1)) {
+                    if(s.getTeam() == Teams.BLUE && comm.getBattle().typeOfBattle != Battles.LEGNANO) {
+                        if (!isEnemyNear(s, 0.2, 0.2)) {
                             int[] posToMoveSpecial = warriorSpecialTactic(s);
                             if (posToMoveSpecial != null) {
                                 Command warriorSpecial;
@@ -101,7 +102,7 @@ public class CommanderBehaviour extends CyclicBehaviour {
                         }
                     }
                     ///// WHEN CALVARY CHARGES
-                    if (warriorCalvaryCharge(s)) {
+                    if (warriorCalvaryCharge(s) && comm.getBattle().typeOfBattle != Battles.LEGNANO) {
                         Command warriorCalvaryChargeCommand = new Command(CommandType.HOLD_POSSITION);
                         s.setCommand(warriorCalvaryChargeCommand);
                         continue;

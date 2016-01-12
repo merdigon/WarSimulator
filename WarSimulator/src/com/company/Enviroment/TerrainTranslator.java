@@ -25,7 +25,6 @@ public class TerrainTranslator extends Component {
 
     public TerrainTranslator() {
         try {
-            ClassLoader loader = Main.class.getClassLoader();
             Path currentRelativePath = Paths.get("");
             String s = currentRelativePath.toAbsolutePath().toString();
             File subDir_1 = new File(s, "WarSimulator");
